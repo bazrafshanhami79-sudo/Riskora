@@ -1,0 +1,19 @@
+{
+ "nimaRate": 1480135,
+ "inflationFactor": 2.07,
+ "formula_rialPerCUnit": "nimaRate * inflationFactor",
+ "note": "C10 = C4*C7. Every monetary threshold is B(c-units) * C10.",
+ "thresholdsCU": {
+  "debrisClearance": 100000,
+  "mdMinPremiumFallback": 500,
+  "tplBands": [
+   500000,
+   1000000,
+   2000000,
+   4000000,
+   6000000,
+   8000000,
+   10000000
+  ]
+ }
+}

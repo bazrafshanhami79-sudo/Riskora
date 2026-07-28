@@ -1,0 +1,14 @@
+[
+ {
+  "option": "Yes — Existing property, WITH explosion risk",
+  "ratePerMille": 15
+ },
+ {
+  "option": "Yes — Existing property, WITHOUT explosion risk",
+  "ratePerMille": 5
+ },
+ {
+  "option": "Not included — existing property not covered",
+  "ratePerMille": 0
+ }
+]

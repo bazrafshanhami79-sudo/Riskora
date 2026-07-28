@@ -1,0 +1,191 @@
+{
+ "EAR_01___Public_Utilities": [
+  "01.1.1 Boilerhouse installations — natural circulation, ≤250 t/h (boiler + superheaters, fans, water treatment, feed pumps)",
+  "01.1.1 Boilerhouse installations comprising boiler with all auxiliaries (superheaters, fans, feed pumps, water treatment) - natural circulat",
+  "01.1.2 Turbogenerating sets — turbine, generator, cooling system, governor, directly connected auxiliaries — up to 50 MW",
+  "01.1.2 Turbogenerating sets (turbine, generator, cooling system, governor, directly connected auxiliaries) — 50 to 125 MW",
+  "01.1.2 Turbogenerating sets (turbine, generator, cooling system, governor, directly connected auxiliaries) — 125 to 250 MW",
+  "01.1.2 Turbogenerating sets (turbine, generator, cooling system, governor, directly connected auxiliaries) — 250 to 450 MW",
+  "01.1.3 Water-systems cycle comprising condenser, feed heater piping, pumps etc.",
+  "01.1.4 Electric equipment, control and measuring installations incl. station transformers",
+  "01.1.5 Balance of plant comprising: ash-handling, off-site tanks",
+  "01.2.1 Gas turbine power plants — Gasturbo generating sets (turbine, compressor, generator, starting device, all auxiliaries) — up to 10 MW",
+  "01.2.1 Gasturbo generating sets (turbine, compressor, generator, starting device, all auxiliaries connected to foundation block) — 10 to 20",
+  "01.2.1 Gasturbo generating sets (turbine, compressor, generator, starting device, all auxiliaries connected to foundation block) — 20 to 40",
+  "01.2.2 Electrical equipment control/measuring: air inlet/outlet, filters, piping, pumps incl. station transformers",
+  "01.2.3 Balance of plant off-site installations: tanks, gas receiving and/or pressure reducing plant etc.",
+  "01.3.1 Diesel generator sets — diesel engine, starting device, generator and all auxiliaries attached — engines with speed above 500 rpm",
+  "01.3.1 Diesel Generator sets (diesel engine, starting device, generator, all attached auxiliaries) - engines with speed above 500 rpm — engi",
+  "01.3.2 Electrical equipment control/measuring; air inlet/outlet, filters, piping, pumps",
+  "01.3.3 Balance of plant comprising off-site installations, tanks, etc.",
+  "01.4.1 Turbinehouse installations - Pelton turbine, up to 100 MW",
+  "01.4.1 Turbinehouse installations - Pelton turbine — Pelton, 100 to 200 MW",
+  "01.4.1 Turbinehouse installations - Pelton turbine — Francis turbine, up to 100 MW",
+  "01.4.1 Turbinehouse installations - Pelton turbine — Francis, 100 to 200 MW",
+  "01.4.1 Turbinehouse installations - Pelton turbine — Kaplan turbine, up to 100 MW",
+  "01.4.1 Turbinehouse installations - Pelton turbine — Kaplan, 100 to 200 MW",
+  "01.4.1 Turbinehouse installations - Pelton turbine — Other types (tubular/axial flow reaction turbines), up to 25 MW",
+  "01.4.1 Turbinehouse installations - Pelton turbine — Other types, 25 to 50 MW",
+  "01.4.2 Pumping house installations - Horizontal pumping sets, up to 25 MW",
+  "01.4.2 Pumping house installations - Horizontal pumping sets — Horizontal, 25 to 50 MW",
+  "01.4.2 Pumping house installations - Horizontal pumping sets — Vertical pumping sets, up to 25 MW",
+  "01.4.2 Pumping house installations - Horizontal pumping sets — Vertical, 25 to 50 MW",
+  "01.4.3 Electrical equipment and measuring installations, station transformers, pressurised air control systems, etc.",
+  "01.4.4 Water intake and off-site installations: penstocks, gates, trash racks, weir installations and the like",
+  "01.5.1 Transformer stations — power transformer, phase compensators, cooling control, capacitors, rectifier banks — 30 to 150 MVA",
+  "01.5.1 Transformer stations — power transformer, phase compensators, cooling control, capacitors, rectifier banks — 150 to 300 MVA",
+  "01.5.1 Transformer stations — power transformer, phase compensators, cooling control, capacitors, rectifier banks — above 300 MVA",
+  "01.5.1 Transformer Stations (power transformer, phase compensators, cooling/control/protection auxiliaries, capacitors, rectifier banks) - P",
+  "01.5.2 Switchgear installations (circuit breakers, control/protection equipment, line feeders) up to 60 kV",
+  "01.5.2 Switchgear installations (circuit breakers, control/protection equipment, line feeders) — 60 kV to 500 kV",
+  "01.5.2 Switchgear installations (circuit breakers, control/protection equipment, line feeders) — above 500 kV",
+  "01.5.3 Overhead transmission lines incl. tower, insulators, etc. up to 60 kV",
+  "01.5.3 Overhead transmission lines incl. tower, insulators, etc. — 60 kV to 220 kV",
+  "01.5.3 Overhead transmission lines incl. tower, insulators, etc. — 220 kV to 750 kV",
+  "01.5.4 Underground cables incl. all auxiliaries but excl. civil works - Classical insulated and oil filled cables",
+  "01.5.4 Underground cables incl. all auxiliaries but excl. civil works - Classical insulated and oil filled cables — Gas filled cables and al",
+  "01.6.1 Waterworks, water purification installations (baths, sewers, desalination; public utilities)",
+  "01.6.2 Desalination plants (excl. power plants, seawater/treated-water pumping stations) - Thermal processes: MSF/VTE/HFF",
+  "01.6.2 Desalination plants (excl. power plants, seawater/treated-water pumping stations) - Thermal processes: MSF/VTE/HFF — Mechanical/elect",
+  "01.6.3 Sewage effluent treatment plants complete, mainly pumps/conveyors/filters/pipes etc. but excl. civil works",
+  "01.6.4 Off-site installations: well installations, main/booster water pumps, storage tanks but excl. civil works (trenching)",
+  "01.7.1 Incineration and district heating plants complete but excl. turbine generating sets",
+  "01.7.2 Composting plants mainly comprising mills, cranes, mixers, conveyors, fermentation tanks, etc.",
+  "01.7.3 Scrap handling (shredder) plants",
+  "01.8.1 Radio and television installations (transmitters, relaying stations, re-broadcasting transmitters, antennas; public utilities)",
+  "01.8.2 Telephone installations - Exchange equipment, control units etc., short-wave transmitters and receivers",
+  "01.8.2 Telephone installations - Exchange equipment, control units etc., short-wave transmitters and receivers — Telephone networks (cabling",
+  "01.8.2 Telephone installations - Exchange equipment, control units etc., short-wave transmitters and receivers — Telephone networks: undergr",
+  "01.8.2 Telephone installations - Exchange equipment, control units etc., short-wave transmitters and receivers — Telephone networks: special"
+ ],
+ "EAR_02___Industrial_Plant_Utilities": [
+  "02.1 Boilers, steam generation installations — incl. all auxiliaries, ≤250 t/h",
+  "02.2 Steam turbine generating sets, complete incl. water steam cycle, control/measuring equipment - up to 25 MW",
+  "02.2 Steam turbine generating sets, complete incl. water steam cycle, control/measuring equipment — 25 to 50 MW",
+  "02.3 Gas turbine sets incl. all auxiliaries - up to 10 MW",
+  "02.3 Gas turbine sets incl. all auxiliaries — 10 MW to 25 MW",
+  "02.4 Diesel generating sets complete up to 25 MW",
+  "02.5 Electrical installations, sub-stations, transformers, switchyard and the like",
+  "02.6 Water supply installations, mainly pumps, valves and piping but excl. civil works/trenching",
+  "02.7 Plant compressed air supply installations (utilities in industrial plants)",
+  "02.8 Air conditioning complete: compressor, air conditioners, humidifiers, heater, ozonizer and conduits",
+  "02.9 Gas installations, mainly receiving station, de-compression devices, scrubbers, pipe works and the like",
+  "02.10 Environment protection plants, mainly waste water/effluent treatment and air/gas filter installations"
+ ],
+ "EAR_03___Mining_Industry": [
+  "03.1 Underground mining installations (mainly conveyors, hoists, ventilating, pumping devices)",
+  "03.2 Dredgers, production machines (mining industry)",
+  "03.3 Open cut mining installations — incl. ore improving and loading facilities (breakers, crushers, mills, conveyors, weighing, washing equipment)",
+  "03.4 Ore pre-processing installations of non-ferrous products, alumina (excl. electrolysis) copper, tin and comparable installations; kilns,"
+ ],
+ "EAR_04___Chemical_Industry": [
+  "04.3.1 Simple classical refinery processes (atmospheric/vacuum distillation, hydrodesulph., residue conversion)",
+  "04.3.2 More sophisticated refinery processes (distillate hydro-treating, hydro-cracking, methane steam reforming, pyrolysis)",
+  "04.3.3 Lubrificating oil plants",
+  "04.3.4 Installation for recovery of non hydro-carbon by-products (sulphur, hydrogen, carbons, acids)",
+  "04.3.6 Auxiliary equipment such as: piping, effluent plant, water treatment, structures and the like but excluding storage tanks (storage ta",
+  "04.4.1 Acid plants and comparable risks such as: sulphuric acid, nitric acid, hydrochloric acid and chloride electrolysis plants and the lik",
+  "04.4.2 Air liquifaction and fractioning plants",
+  "04.4.3 Processes for the production of basic material for mineral pigments, colouring substances and the like",
+  "04.4.4 Processes for the production of basic pharmaceutical substances and comparable basic material",
+  "04.4.5 Auxiliary equipment such as piping, lab. equipment, effluent plant and the like",
+  "04.5.3 Phosphate fertilizer plants, super-phosphate",
+  "04.5.4 Fertilizer plants — potash (chemical industry)",
+  "04.5.5 Multi-nutritive-substance fertilizers, i.e. mixing of N-P-K products",
+  "04.5.6 Auxiliaries such as piping, effluent plant, cabling and the like",
+  "04.6.1 Storage, transport and loading facilities — tank farms (incl. piping, pumps and measuring equipment; excl. civil works)",
+  "04.6.3 Pumping and compressor stations in pipelines incl. auxiliaries - turbine driven",
+  "04.6.3 Pumping and compressor stations in pipelines incl. auxiliaries - turbine driven — motor driven",
+  "04.6.4 Loading facilities but excluding off-shore facilities such as buoy moorings"
+ ],
+ "EAR_05___Metal_Industry": [
+  "05.1 Basic metal extraction and processing - Direct reduction plants (Midrex) sponge iron production complete with all auxiliaries",
+  "05.1 Basic metal extraction and processing - Direct reduction plants (Midrex) sponge iron production complete with all auxiliaries — Blast f",
+  "05.2 Steel works — foundries, rolling mills and comparable processes (conversion of pig iron into steel)",
+  "05.3 Non-ferrous metal processing (aluminium, copper electrolysis, refining and comparable risks)",
+  "05.4 Heavy engineering fabrication plants (shipyards, boiler shops, forges and comparable risks)",
+  "05.5 Medium and light type of engineering (machine shops, metal fabrication, etc.)",
+  "05.6 Galvanising plants and comparable risks (surface finishing)"
+ ],
+ "EAR_06___Building_Industry": [
+  "06.1 Quarries, gravel pits complete mainly comprising crushers, mills, conveyors, sorters and weighing installations, etc. but excluding mob",
+  "06.2 Cement, chalk and gypsum works — complete, excl. quarry installations",
+  "06.3 Artificial stone works, brickyards, prefabricated building component works, ceramic works and comparable plants",
+  "06.4 Glass works - Plate glass",
+  "06.4 Glass works - Other types"
+ ],
+ "EAR_07___Timber___Wood": [
+  "07.1 Saw mills — incl. installations for seasoning of timber",
+  "07.2 Wood processing plants such as: Veneer, laminated board, plywood, wood chips board and comparable risks",
+  "07.3 Furniture factories and comparable plants"
+ ],
+ "EAR_08___Pulp___Paper": [
+  "08.1 Wood pulp and cellulose factories and comparable plants but excluding paper machine section",
+  "08.2 Paper and cardboard factories — incl. all auxiliaries, excl. pulp production facilities"
+ ],
+ "EAR_09___Printing___Packing": [
+  "09.1 Printing shops and bookbinding shops (incl. newspaper printing; printing and packing material industries)",
+  "09.2 Stationery factories and factories for paper and cardboard-packing material"
+ ],
+ "EAR_10___Leather_Industry": [
+  "10.1 Tanneries (leather industry)",
+  "10.2 Leather goods factories (shoes, suitcases, bags, etc.)"
+ ],
+ "EAR_11___Textile_Industry": [
+  "11.1 Raw material processing plants (processing of wool, silk, flax, cotton and the like)",
+  "11.2 Production of artificial fibres (feedstock, caprolactum, cellulose, etc.)",
+  "11.3 Textile fabrication (spinning, weaving, knitting mills)",
+  "11.4 Finishing plants (dyeing, bleaching and printing processes)",
+  "11.5 Ready-made clothes factories",
+  "11.6 Textures for technical application (fabrication of carpets, linings, ropes, etc.)",
+  "11.7 Industrial laundries, dry cleaners"
+ ],
+ "EAR_12___Plastic___Rubber": [
+  "12.1 Plastic & rubber products factories (mainly cutters, mills, mixers, extruders, plastic-blowing machines)",
+  "12.2 Tyre factories",
+  "12.3 Linoleum factories",
+  "12.4 Cable factories",
+  "12.5 Paint factories and processing of comparable products",
+  "12.6 Production of pharmaceuticals and comparable plants"
+ ],
+ "EAR_13___Food__Vegetable_": [
+  "13.1 Grain & fodder mills, malthouses and comparable risks",
+  "13.2 Bakeries, biscuit and candy products factories",
+  "13.3 Cocoa and chocolate factories",
+  "13.4 Breweries, distilleries, soft drinks factories",
+  "13.5 Tobacco processing plants",
+  "13.6 Edible oil factories - Solvent extraction",
+  "13.6 Edible oil factories - Mechanical extraction",
+  "13.7 Sugar factories but excluding power plant - Cane sugar",
+  "13.7 Sugar factories but excluding power plant - Beet sugar"
+ ],
+ "EAR_14___Food__Animal_": [
+  "14.1 Dairies and comparable installations (ice-cream products; food industry, animal origin)",
+  "14.2 Slaughterhouses, meat processing factories, butcheries",
+  "14.3 Fishmeal factories and comparable risks"
+ ],
+ "EAR_15___Food_Refrigeration": [
+  "15.1 Canneries (meat, fish, vegetables)",
+  "15.2 Cold stores (cold storage, deep freezing, controlled atmosphere; food refrigeration, canneries, cold stores)"
+ ],
+ "EAR_16___Transport___Warehouses": [
+  "16.1 Cableways, skilifts and comparable installations",
+  "16.2 Cranes, bridge cranes (transport systems, ports, warehouses)",
+  "16.3 Lifts, hoists, lifting equipment, racks, conveying equipment, shelf-stackers and comparable installations",
+  "16.4 Tank farms incl. piping, pumps and measuring equipment but excluding civil works"
+ ],
+ "EAR_17___Public_Services": [
+  "17.1 Water treatment, water circulating, heating facilities for swimming pools",
+  "17.2 Ice rinks complete including compressors but excluding civil works",
+  "17.3 Floodlight installations and other facilities for sports stadiums (public services: stadiums, theatres, cinemas, entertainment)"
+ ],
+ "EAR_18___Hospitals___Hotels": [
+  "18.1 General technical installations (heating, air conditioning, lifts, electrical and sanitary installations) — Hospitals, Hotels, Department Stores, Schools",
+  "18.2 Medical and laboratory equipment, projection and photographic equipment — Hospitals, Hotels, Department Stores, Schools"
+ ],
+ "EAR_19___Farming___Agriculture": [
+  "19.1 Irrigation systems complete (well installations with pumps, pivoting and/or fixed irrigation piping; excl. civil works and power plants)",
+  "19.2 General farm installations such as silos, storage tanks, packing and weighing machines, radio-communication equipment, maintenance shop",
+  "19.3 Poultry farms (rearing hatcheries) and similar installations"
+ ]
+}

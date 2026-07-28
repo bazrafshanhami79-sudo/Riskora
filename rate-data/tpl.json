@@ -1,0 +1,66 @@
+{
+ "baseRates": {
+  "I": {
+   "a": 0.2,
+   "b": 0.3,
+   "c": 0.4
+  },
+  "II": {
+   "a": 0.3,
+   "b": 0.45,
+   "c": 0.6
+  },
+  "III": {
+   "a": 0.4,
+   "b": 0.6,
+   "c": 0.8
+  }
+ },
+ "minPremiumCU": {
+  "I": {
+   "a": 500,
+   "b": 800,
+   "c": 1500
+  },
+  "II": {
+   "a": 1300,
+   "b": 1800,
+   "c": 2500
+  },
+  "III": {
+   "a": 2300,
+   "b": 2900,
+   "c": 4000
+  }
+ },
+ "limitFactors": [
+  {
+   "thresholdCU": 500000,
+   "factor": 0.65
+  },
+  {
+   "thresholdCU": 1000000,
+   "factor": 0.8
+  },
+  {
+   "thresholdCU": 2000000,
+   "factor": 1
+  },
+  {
+   "thresholdCU": 4000000,
+   "factor": 1.2
+  },
+  {
+   "thresholdCU": 6000000,
+   "factor": 1.4
+  },
+  {
+   "thresholdCU": 8000000,
+   "factor": 1.56
+  },
+  {
+   "thresholdCU": 10000000,
+   "factor": 1.67
+  }
+ ]
+}
