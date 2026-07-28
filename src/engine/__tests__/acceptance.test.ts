@@ -7,8 +7,8 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { calculate, tplLimitFactor } from '../calc'
-import { DEFAULT_CURRENCY } from '../data'
+import { DEFAULT_INPUTS, calculate, tplLimitFactor } from '../calc'
+import { DEFAULT_CURRENCY, subGroupsFor } from '../data'
 import type { EarInputs } from '../types'
 
 /**
@@ -103,6 +103,34 @@ describe('T1 — Entire Project, 15 months', () => {
 
   it('passes every applicable validation', () => {
     expect(r.allValid).toBe(true)
+  })
+})
+
+describe('shipped defaults', () => {
+  const r = calculate(DEFAULT_INPUTS)
+
+  it('default to Entire Project scope', () => {
+    expect(DEFAULT_INPUTS.projectScope).toBe('ENTIRE_PROJECT')
+  })
+
+  it('reproduce T1 out of the box', () => {
+    expect(r.rate.effectiveErection).toBe(3.65)
+    expect(r.rate.mdTechnicalRate).toBeCloseTo(4.1, 10)
+    expect(r.grossMDPremium).toBe(82_000_000)
+    expect(r.totalPayable).toBe(94_600_000)
+    expect(r.allValid).toBe(true)
+  })
+
+  it('pair the default sub-group with the industry group that actually contains it', () => {
+    // Otherwise the cascading picker opens on an empty selection.
+    const names = subGroupsFor(DEFAULT_INPUTS.industryGroup).map((s) => s.name)
+    expect(names).toContain(DEFAULT_INPUTS.subGroup)
+  })
+
+  it('are unaffected by the industry group, which never feeds the calculation', () => {
+    const viaOtherGroup = calculate({ ...DEFAULT_INPUTS, industryGroup: '05 — Metal Industry' })
+    expect(viaOtherGroup.totalPayable).toBe(r.totalPayable)
+    expect(viaOtherGroup.rate.mdTechnicalRate).toBe(r.rate.mdTechnicalRate)
   })
 })
 

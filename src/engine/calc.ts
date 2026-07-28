@@ -39,7 +39,12 @@ export const MACHINE_TESTING_CAP = 3
 
 export const DEFAULT_INPUTS: EarInputs = {
   projectScope: 'ENTIRE_PROJECT',
-  industryGroup: '05 — Metal Industry',
+  // The §7 reference scenario names industry group `05 — Metal Industry`
+  // alongside sub-group `12.5 Paint factories…`, which is the workbook's own
+  // stale pairing — 12.5 belongs to group 12. `industryGroup` only filters the
+  // sub-group picker and never feeds the calculation, so the coherent group is
+  // used here; the reference premium is unchanged.
+  industryGroup: '12 — Plastic & Rubber',
   subGroup: '12.5 Paint factories and processing of comparable products',
   machine: '02.0.1 — Boiler feed pumps, incl. drive — turbine driven',
   durationMonths: 15,

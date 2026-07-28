@@ -1,0 +1,267 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/vazirmatn';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================================
+   LAYER 1 — PRIMITIVE TOKENS (raw values, never referenced by a component)
+   ========================================================================== */
+:root {
+  /* Ink — the deep neutral foundation */
+  --ink-950: #060a12;
+  --ink-900: #0b1220;
+  --ink-850: #0f1828;
+  --ink-800: #141f33;
+  --ink-750: #1a2740;
+  --ink-700: #22324f;
+  --ink-600: #2e415f;
+
+  /* Slate — mid neutrals */
+  --slate-500: #64748b;
+  --slate-400: #94a3b8;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-150: #eaeff5;
+  --slate-100: #f1f5f9;
+  --slate-50: #f8fafc;
+  --white: #ffffff;
+
+  /* Gold — the single restrained metallic accent */
+  --gold-200: #f0dcaa;
+  --gold-300: #e3c37c;
+  --gold-400: #d5ac57;
+  --gold-500: #b98a2e;
+  --gold-600: #a16207;
+  --gold-700: #7d4c06;
+
+  /* Status */
+  --green-400: #4ade80;
+  --green-600: #15803d;
+  --red-400: #f87171;
+  --red-600: #dc2626;
+  --amber-400: #fbbf24;
+  --amber-600: #b45309;
+
+  /* Spacing — density 8/10 (dense dashboard: 4 → 32px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Motion — brief, purposeful, never above 200ms */
+  --duration-fast: 120ms;
+  --duration-base: 180ms;
+  --ease-out: ease-out;
+}
+
+/* ==========================================================================
+   LAYER 2 — SEMANTIC TOKENS (purpose aliases; this layer switches theme)
+   ========================================================================== */
+:root {
+  --bg: var(--slate-100);
+  --bg-subtle: var(--slate-150);
+  --surface: var(--white);
+  --surface-raised: var(--white);
+  --surface-sunken: var(--slate-50);
+  --fg: #0a1121;
+  --fg-muted: #4d5b73;
+  /* Darkened from slate-500 / gold-600: both cleared 4.5:1 on white but fell
+     to 4.34 / 4.49 against the page background. Measured, not eyeballed. */
+  --fg-subtle: #5f6d80;
+  --border: var(--slate-200);
+  --border-strong: var(--slate-300);
+  --accent: #9a5e07;
+  --accent-hover: var(--gold-700);
+  --accent-fg: var(--white);
+  --accent-quiet: #f5ecd8;
+  --success: var(--green-600);
+  --danger: var(--red-600);
+  --warning: var(--amber-600);
+  --ring: var(--gold-600);
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.04);
+  --shadow-panel: 0 -1px 3px rgb(15 23 42 / 0.06), 0 -8px 24px rgb(15 23 42 / 0.06);
+}
+
+.dark {
+  --bg: var(--ink-900);
+  --bg-subtle: var(--ink-950);
+  --surface: var(--ink-850);
+  --surface-raised: var(--ink-800);
+  --surface-sunken: var(--ink-950);
+  --fg: #eef3fb;
+  --fg-muted: #a7b6cd;
+  --fg-subtle: #7c8ba6;
+  --border: var(--ink-700);
+  --border-strong: var(--ink-600);
+  --accent: var(--gold-400);
+  --accent-hover: var(--gold-300);
+  --accent-fg: var(--ink-950);
+  --accent-quiet: #241d0e;
+  --success: var(--green-400);
+  --danger: var(--red-400);
+  --warning: var(--amber-400);
+  --ring: var(--gold-400);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.3);
+  --shadow-panel: 0 -1px 3px rgb(0 0 0 / 0.5), 0 -10px 30px rgb(0 0 0 / 0.45);
+}
+
+/* Map semantic tokens onto Tailwind utilities. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-quiet: var(--accent-quiet);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-ring: var(--ring);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+
+  --font-sans: 'Vazirmatn Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    /* Persian typography: never inherit Latin-tuned tracking. Negative
+       letter-spacing breaks the joined letterforms of Farsi script. */
+    letter-spacing: 0;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Vazirmatn Variable', ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.9375rem;
+    /* Farsi needs more leading than Latin at the same size. */
+    line-height: 1.85;
+    font-feature-settings: 'ss01';
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.5;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Numerals and money read as columns, not prose. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  /* Latin technical identifiers (EAR codes, machine names) inside RTL text. */
+  .ltr-inline {
+    direction: ltr;
+    unicode-bidi: isolate;
+    text-align: start;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   LAYER 3 — COMPONENT TOKENS / PRIMITIVES
+   ========================================================================== */
+@layer components {
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--fg);
+    line-height: 1.6;
+  }
+
+  .field-help {
+    font-size: 0.75rem;
+    color: var(--fg-subtle);
+    line-height: 1.7;
+  }
+
+  .rule-hair {
+    border-color: color-mix(in srgb, var(--border) 70%, transparent);
+  }
+}
+
+/* A number that has just changed. The only thing on the page that moves. */
+@keyframes value-settle {
+  from {
+    opacity: 0.45;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-value {
+  animation: value-settle var(--duration-base) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
