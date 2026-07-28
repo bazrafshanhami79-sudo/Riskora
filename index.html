@@ -9,8 +9,13 @@
       content="محاسبهٔ نرخ و حق‌بیمهٔ بیمه‌نامهٔ تمام‌خطر نصب (EAR) به روش سوئیس‌ری، بومی‌سازی‌شده برای بازار ایران: ریال، استاندارد ۲۸۰۰ و نرخ نیما."
     />
     <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#0b1220" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
+    <!-- Single value: the app opens dark regardless of OS preference, so a
+         prefers-color-scheme-split theme-color would mismatch the browser
+         chrome for anyone whose system is set to light. -->
+    <meta name="theme-color" content="#0b1220" />
+    <!-- Private underwriting tool: never indexed. No canonical or og:image,
+         because there is no public URL to point them at and inventing one
+         would be worse than omitting them. -->
     <meta name="robots" content="noindex, nofollow" />
     <link
       rel="icon"
