@@ -22,6 +22,16 @@ No backend, no database, no auth, no telemetry. Everything runs client-side, and
 persisted — there is deliberately no `localStorage`/`sessionStorage` use, so reloading the page
 returns to the default scenario.
 
+### Deploying
+
+`vite build` emits to **`dist/`**. `vercel.json` pins the framework, build command, and output
+directory, so a host does not have to infer them — without it, a project preset left on Create
+React App looks for a `build/` directory and fails with
+`No Output Directory named "build" found`.
+
+The build is a static bundle; any static host works. There is a single page and no client-side
+router, so no SPA rewrite rule is needed.
+
 ---
 
 ## Where the rate data lives
