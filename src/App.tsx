@@ -35,6 +35,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { ChoiceField, NumberField, SelectField } from '@/components/Fields'
+import { Disclaimer } from '@/components/Disclaimer'
 import { PremiumWaterfall, RateBuildUp } from '@/components/RateBreakdown'
 import { ResultBar, ValidationPanel } from '@/components/Summary'
 
@@ -171,6 +172,8 @@ export default function App() {
       {/* ---------------- body ---------------- */}
       <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
         <h1 className="sr-only">{L.appTitle}</h1>
+
+        <Disclaimer />
 
         <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_400px]">
           {/* ------------- inputs ------------- */}
