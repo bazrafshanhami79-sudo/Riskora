@@ -7,7 +7,6 @@ import {
   calculate,
   citiesFor,
   existingPropertyOptions,
-  findCity,
   industryGroups,
   machines,
   provinces,
@@ -19,15 +18,14 @@ import {
 } from '@/engine'
 import {
   EQ_SENSITIVITY_FA,
-  HAZARD_TONE,
   L,
   STRUCTURE_FA,
   TPL_CATEGORY_FA,
   TPL_SURROUNDINGS_FA,
 } from '@/labels'
-import { formatDecimal, formatMoney, formatRial } from '@/lib/format'
+import { formatRial } from '@/lib/format'
 import { Button } from '@/components/ui/button'
-import { Badge, Card, CardHeader } from '@/components/ui/misc'
+import { Card, CardHeader } from '@/components/ui/misc'
 import {
   Accordion,
   AccordionContent,
@@ -37,7 +35,7 @@ import {
 import { ChoiceField, NumberField, SelectField } from '@/components/Fields'
 import { Disclaimer } from '@/components/Disclaimer'
 import { AppHeader } from '@/components/AppHeader'
-import { PremiumWaterfall, RateBuildUp } from '@/components/RateBreakdown'
+import { RatePanel } from '@/components/RatePanel'
 import { ResultBar, ValidationPanel } from '@/components/Summary'
 
 const YES_NO = [
@@ -73,7 +71,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
     [inputs.industryGroup],
   )
   const provinceCities = React.useMemo(() => citiesFor(inputs.province), [inputs.province])
-  const selectedCity = findCity(inputs.province, inputs.city)
 
   // Cascading selects: keep the child valid when the parent changes.
   const changeIndustryGroup = (label: string) => {
@@ -116,7 +113,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                     id="nimaRate"
                     money
                     label={L.nimaRate}
-                    help={L.nimaRateHelp}
                     value={currency.nimaRate}
                     onChange={(v) => setCurrency((c) => ({ ...c, nimaRate: v }))}
                   />
@@ -124,7 +120,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                     id="inflationFactor"
                     step={0.01}
                     label={L.inflationFactor}
-                    help={L.inflationFactorHelp}
                     value={currency.inflationFactor}
                     onChange={(v) => setCurrency((c) => ({ ...c, inflationFactor: v }))}
                   />
@@ -163,7 +158,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   id="projectScope"
                   className="mb-5"
                   label={L.projectScope}
-                  help={L.projectScopeHelp}
                   value={inputs.projectScope}
                   onChange={(v) => set('projectScope', v)}
                   options={[
@@ -178,7 +172,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                     className="sm:col-span-2"
                     ltrOptions
                     label={L.industryGroup}
-                    help={L.industryGroupHelp}
                     value={inputs.industryGroup}
                     onChange={changeIndustryGroup}
                     options={industryGroups.map((g) => ({ value: g.label, label: g.label }))}
@@ -190,7 +183,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       className="sm:col-span-2"
                       ltrOptions
                       label={L.subGroup}
-                      help={L.subGroupHelp}
                       value={inputs.subGroup}
                       onChange={(v) => set('subGroup', v)}
                       options={withCurrent(
@@ -206,7 +198,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       className="sm:col-span-2"
                       ltrOptions
                       label={L.machine}
-                      help={L.machineHelp}
                       value={inputs.machine}
                       onChange={(v) => set('machine', v)}
                       options={machines.map((m) => ({ value: m.key, label: m.key }))}
@@ -219,7 +210,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       min={1}
                       max={120}
                       label={L.durationMonths}
-                      help={L.durationMonthsHelp}
                       value={inputs.durationMonths}
                       onChange={(v) => set('durationMonths', v)}
                       error={
@@ -235,7 +225,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                         min={0}
                         max={9}
                         label={L.erectionMonths}
-                        help={L.erectionMonthsHelp}
                         value={inputs.erectionMonths}
                         onChange={(v) => set('erectionMonths', v)}
                         error={
@@ -249,7 +238,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                         min={0}
                         max={3}
                         label={L.testingMonths}
-                        help={L.testingMonthsHelp}
                         value={inputs.testingMonths}
                         onChange={(v) => set('testingMonths', v)}
                         error={
@@ -264,7 +252,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   <SelectField
                     id="province"
                     label={L.province}
-                    help={L.provinceHelp}
                     value={inputs.province}
                     onChange={changeProvince}
                     options={provinces.map((p) => ({ value: p, label: p }))}
@@ -278,19 +265,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       provinceCities.map((c) => ({ value: c.city, label: c.city })),
                       inputs.city,
                     )}
-                    help={
-                      selectedCity ? (
-                        <span className="inline-flex items-center gap-1.5">
-                          سطح خطر زلزله:
-                          <Badge tone={HAZARD_TONE[selectedCity.hazard] ?? 'neutral'}>
-                            {selectedCity.hazard}
-                          </Badge>
-                          <span>· پهنهٔ {result.earthquake.zone}</span>
-                        </span>
-                      ) : (
-                        L.cityHelp
-                      )
-                    }
                   />
                 </div>
               </div>
@@ -304,7 +278,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   id="sumInsured"
                   money
                   label={L.sumInsured}
-                  help={L.sumInsuredHelp}
                   value={inputs.sumInsured}
                   onChange={(v) => set('sumInsured', v)}
                   error={inputs.sumInsured <= 0 ? 'مبلغ بیمه باید بزرگ‌تر از صفر باشد.' : undefined}
@@ -314,11 +287,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   money
                   disabled={inputs.tplIncluded === 'No'}
                   label={L.tplLimit}
-                  help={
-                    inputs.tplIncluded === 'No'
-                      ? 'پوشش TPL انتخاب نشده است.'
-                      : `${L.tplLimitHelp} · ضریب فعلی: ${formatDecimal(result.tpl.limitFactor)}`
-                  }
                   value={inputs.tplLimit}
                   onChange={(v) => set('tplLimit', v)}
                 />
@@ -327,12 +295,11 @@ export function EarRating({ onHome }: { onHome: () => void }) {
 
             {/* Section 3 */}
             <Card>
-              <CardHeader title={L.sec3} description={L.sec3Hint} />
+              <CardHeader title={L.sec3} />
               <div className={`${grid} px-5 pb-5`}>
                 <ChoiceField
                   id="tplIncluded"
                   label={L.tplIncluded}
-                  help={L.tplIncludedHelp}
                   value={inputs.tplIncluded}
                   onChange={(v) => set('tplIncluded', v)}
                   options={YES_NO}
@@ -341,7 +308,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   <ChoiceField
                     id="hotTestingIncluded"
                     label={L.hotTestingIncluded}
-                    help={L.hotTestingIncludedHelp}
                     value={inputs.hotTestingIncluded}
                     onChange={(v) => set('hotTestingIncluded', v)}
                     options={YES_NO}
@@ -353,7 +319,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                 <ChoiceField
                   id="maintenanceClass"
                   label={L.maintenanceClass}
-                  help={L.maintenanceClassHelp}
                   value={inputs.maintenanceClass}
                   onChange={(v) => set('maintenanceClass', v)}
                   options={[
@@ -367,7 +332,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   id="visitsMaintenanceMonths"
                   min={0}
                   label={L.visitsMaintenanceMonths}
-                  help={L.zeroMeansNone}
                   value={inputs.visitsMaintenanceMonths}
                   onChange={(v) => set('visitsMaintenanceMonths', v)}
                 />
@@ -375,7 +339,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   id="extendedMaintenanceMonths"
                   min={0}
                   label={L.extendedMaintenanceMonths}
-                  help={L.zeroMeansNone}
                   value={inputs.extendedMaintenanceMonths}
                   onChange={(v) => set('extendedMaintenanceMonths', v)}
                 />
@@ -383,7 +346,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                 <SelectField
                   id="eqSensitivityClass"
                   label={L.eqSensitivityClass}
-                  help={L.eqSensitivityClassHelp}
                   value={String(inputs.eqSensitivityClass)}
                   onChange={(v) => set('eqSensitivityClass', Number(v) as EqSensitivityClass)}
                   options={[1, 2, 3, 4].map((n) => ({ value: String(n), label: EQ_SENSITIVITY_FA[n] }))}
@@ -391,7 +353,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                 <SelectField
                   id="structureClass"
                   label={L.structureClass}
-                  help={L.structureClassHelp}
                   value={String(inputs.structureClass)}
                   onChange={(v) => set('structureClass', Number(v) as StructureClass)}
                   options={[1, 2, 3, 4, 5, 6].map((n) => ({ value: String(n), label: STRUCTURE_FA[n] }))}
@@ -401,7 +362,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   id="tplCategory"
                   disabled={inputs.tplIncluded === 'No'}
                   label={L.tplCategory}
-                  help={L.tplCategoryHelp}
                   value={inputs.tplCategory}
                   onChange={(v) => set('tplCategory', v as EarInputs['tplCategory'])}
                   options={['I', 'II', 'III'].map((c) => ({ value: c, label: TPL_CATEGORY_FA[c] }))}
@@ -410,7 +370,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   id="tplSurroundings"
                   disabled={inputs.tplIncluded === 'No'}
                   label={L.tplSurroundings}
-                  help={L.tplSurroundingsHelp}
                   value={inputs.tplSurroundings}
                   onChange={(v) => set('tplSurroundings', v as EarInputs['tplSurroundings'])}
                   options={['a', 'b', 'c'].map((s) => ({ value: s, label: TPL_SURROUNDINGS_FA[s] }))}
@@ -420,7 +379,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   id="crossLiability"
                   disabled={inputs.tplIncluded === 'No'}
                   label={L.crossLiability}
-                  help={L.crossLiabilityHelp}
                   value={inputs.crossLiability}
                   onChange={(v) => set('crossLiability', v)}
                   options={YES_NO}
@@ -428,7 +386,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                 <ChoiceField
                   id="earthquakeExclusion"
                   label={L.earthquakeExclusion}
-                  help={L.earthquakeExclusionHelp}
                   value={inputs.earthquakeExclusion}
                   onChange={(v) => set('earthquakeExclusion', v)}
                   options={YES_NO}
@@ -444,7 +401,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   <ChoiceField
                     id="natureRiskLoadingForMachine"
                     label={L.natureRiskForMachine}
-                    help={L.natureRiskForMachineHelp}
                     value={inputs.natureRiskLoadingForMachine}
                     onChange={(v) => set('natureRiskLoadingForMachine', v)}
                     options={YES_NO}
@@ -456,14 +412,13 @@ export function EarRating({ onHome }: { onHome: () => void }) {
             {/* Sections 4 & 5 — progressive disclosure */}
             <Accordion type="multiple" className="space-y-4">
               <AccordionItem value="supplementary">
-                <AccordionTrigger hint={L.sec4Hint}>{L.sec4}</AccordionTrigger>
+                <AccordionTrigger>{L.sec4}</AccordionTrigger>
                 <AccordionContent>
                   <div className={grid}>
                     <NumberField
                       id="mrMaterial"
                       min={0}
                       label={L.mrMaterial}
-                      help={L.mrHelp}
                       value={inputs.manufacturerRiskMaterialMonths}
                       onChange={(v) => set('manufacturerRiskMaterialMonths', v)}
                     />
@@ -471,7 +426,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       id="mrDesign"
                       min={0}
                       label={L.mrDesign}
-                      help={L.mrHelp}
                       value={inputs.manufacturerRiskDesignMonths}
                       onChange={(v) => set('manufacturerRiskDesignMonths', v)}
                     />
@@ -480,7 +434,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       step={0.005}
                       min={0}
                       label={L.expediting}
-                      help={L.expeditingHelp}
                       value={inputs.expeditingCostsPct}
                       onChange={(v) => set('expeditingCostsPct', v)}
                     />
@@ -490,14 +443,12 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       step={0.05}
                       min={0}
                       label={L.riotStrikeRate}
-                      help={L.riotStrikeRateHelp}
                       value={inputs.riotStrikeRate}
                       onChange={(v) => set('riotStrikeRate', v)}
                     />
                     <ChoiceField
                       id="riotStrikePeriodBasis"
                       label={L.riotStrikeBasis}
-                      help={L.riotStrikeBasisHelp}
                       value={inputs.riotStrikePeriodBasis}
                       onChange={(v) => set('riotStrikePeriodBasis', v)}
                       options={[
@@ -513,7 +464,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       money
                       min={0}
                       label={L.airFreightLimit}
-                      help={L.zeroMeansNone}
                       value={inputs.airFreightLimit}
                       onChange={(v) => set('airFreightLimit', v)}
                     />
@@ -522,7 +472,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       step={0.5}
                       min={0}
                       label={L.airFreightRate}
-                      help={L.airFreightRateHelp}
                       value={inputs.airFreightRate}
                       onChange={(v) => set('airFreightRate', v)}
                     />
@@ -531,7 +480,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       money
                       min={0}
                       label={L.storageValue}
-                      help={L.storageHelp}
                       value={inputs.storageValue}
                       onChange={(v) => set('storageValue', v)}
                     />
@@ -539,7 +487,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       id="storageMonths"
                       min={0}
                       label={L.storageMonths}
-                      help={L.zeroMeansNone}
                       value={inputs.storageMonths}
                       onChange={(v) => set('storageMonths', v)}
                     />
@@ -548,7 +495,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       money
                       min={0}
                       label={L.transitValue}
-                      help={L.transitValueHelp}
                       value={inputs.transitValue}
                       onChange={(v) => set('transitValue', v)}
                     />
@@ -557,14 +503,12 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       money
                       min={0}
                       label={L.debrisLimit}
-                      help={`${L.debrisLimitHelp} · آستانه: ${formatMoney(result.addOns.debrisThresholdRial)} ﷼`}
                       value={inputs.debrisLimit}
                       onChange={(v) => set('debrisLimit', v)}
                     />
                     <SelectField
                       id="existingProperty"
                       label={L.existingProperty}
-                      help={L.existingPropertyHelp}
                       value={inputs.existingProperty}
                       onChange={(v) => set('existingProperty', v)}
                       options={existingPropertyOptions.map((o) => ({
@@ -577,7 +521,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       money
                       min={0}
                       label={L.existingPropertyLimit}
-                      help={L.zeroMeansNone}
                       value={inputs.existingPropertyLimit}
                       onChange={(v) => set('existingPropertyLimit', v)}
                     />
@@ -586,14 +529,13 @@ export function EarRating({ onHome }: { onHome: () => void }) {
               </AccordionItem>
 
               <AccordionItem value="commercial">
-                <AccordionTrigger hint="تعدیل نرخ‌گذار، کارمزد و مالیات">{L.sec5}</AccordionTrigger>
+                <AccordionTrigger>{L.sec5}</AccordionTrigger>
                 <AccordionContent>
                   <div className={grid}>
                     <NumberField
                       id="underwritingAdjustment"
                       step={0.05}
                       label={L.underwritingAdjustment}
-                      help={L.underwritingAdjustmentHelp}
                       value={inputs.underwritingAdjustment}
                       onChange={(v) => set('underwritingAdjustment', v)}
                     />
@@ -603,7 +545,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       step={0.01}
                       min={0}
                       label={L.brokerage}
-                      help={L.brokerageHelp}
                       value={inputs.brokerage}
                       onChange={(v) => set('brokerage', v)}
                     />
@@ -612,7 +553,6 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                       step={0.01}
                       min={0}
                       label={L.insuranceTax}
-                      help={L.insuranceTaxHelp}
                       value={inputs.insuranceTax}
                       onChange={(v) => set('insuranceTax', v)}
                     />
@@ -623,29 +563,27 @@ export function EarRating({ onHome }: { onHome: () => void }) {
           </div>
 
           {/* ------------- breakdown ------------- */}
-          <aside className="space-y-4 lg:sticky lg:top-[4.75rem] lg:self-start">
+          {/* The aside stretches to the row height so the inner wrapper has
+              somewhere to travel; sticky on a self-start grid item cannot move. */}
+          <aside>
+            <div className="space-y-4 lg:sticky lg:top-24">
             <Card>
-              <CardHeader title={L.breakdownTitle} description={L.breakdownSubtitle} />
+              <CardHeader title={L.ratePanelTitle} />
               <div className="px-5 pb-5">
-                <h3 className="eyebrow mb-4">
-                  {L.rateBuildUp}
-                </h3>
-                <RateBuildUp result={result} inputs={inputs} />
-              </div>
-              <div className="border-t rule-hair px-5 py-5">
-                <h3 className="eyebrow mb-4">
-                  {L.premiumWaterfall}
-                </h3>
-                <PremiumWaterfall result={result} inputs={inputs} />
+                <RatePanel result={result} />
               </div>
             </Card>
 
-            <Card>
-              <CardHeader title={L.validationTitle} />
-              <div className="px-5 pb-5">
-                <ValidationPanel result={result} />
-              </div>
-            </Card>
+            {/* Only rendered when something actually needs fixing. */}
+            {!result.allValid || result.warnings.length > 0 ? (
+              <Card>
+                <CardHeader title={L.issuesTitle} />
+                <div className="px-5 pb-5">
+                  <ValidationPanel result={result} />
+                </div>
+              </Card>
+              ) : null}
+            </div>
           </aside>
         </div>
       </main>
