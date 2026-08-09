@@ -19,7 +19,7 @@ export function CardHeader({
   return (
     <div className={cn('flex items-start justify-between gap-3 px-5 pb-3 pt-4', className)}>
       <div className="min-w-0">
-        <h2 className="text-sm font-semibold text-fg">{title}</h2>
+        <h2 className="text-sm font-semibold text-foreground">{title}</h2>
         {description ? <p className="field-help mt-0.5">{description}</p> : null}
       </div>
       {actions}
@@ -33,10 +33,10 @@ export function Badge({
   ...props
 }: React.ComponentProps<'span'> & { tone?: 'neutral' | 'accent' | 'success' | 'danger' | 'warning' }) {
   const tones: Record<string, string> = {
-    neutral: 'bg-bg-subtle text-fg-muted border-border',
-    accent: 'bg-accent-quiet text-accent border-transparent',
+    neutral: 'bg-muted text-foreground/70 border-border',
+    accent: 'bg-muted text-foreground border-transparent',
     success: 'bg-transparent text-success border-success/40',
-    danger: 'bg-transparent text-danger border-danger/40',
+    danger: 'bg-transparent text-destructive border-destructive/40',
     warning: 'bg-transparent text-warning border-warning/40',
   }
   return (

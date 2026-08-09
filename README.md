@@ -35,8 +35,8 @@ directory, so a host does not have to infer them — without it, a project prese
 React App looks for a `build/` directory and fails with
 `No Output Directory named "build" found`.
 
-The build is a static bundle; any static host works. There is a single page and no client-side
-router, so no SPA rewrite rule is needed.
+The build is a static bundle; any static host works. Routing is hash-based, so no SPA rewrite
+rule is needed.
 
 ---
 
@@ -91,7 +91,7 @@ default rather than the session value, edit `currency.json`.
 ```
 rate-data/                  static JSON rate tables (EAR)
 src/routes.ts               hash routing
-src/App.tsx                 shell: theme, shader backdrop, route resolution
+src/App.tsx                 shell: route resolution + page noise overlay
 src/views/
   Landing.tsx               the tool chooser
   EarRating.tsx             the EAR rating tool
@@ -118,13 +118,12 @@ scenarios, components and tests are unmodified. Only two things were added aroun
   both tools read as one product.
 - A **token compatibility layer** in `src/index.css`. The calculator ships its own vocabulary
   (`primary` / `foreground` / `card` / `muted` / …) on a blue-on-navy glass theme; those names
-  are aliased onto Riskora's semantic tokens, so it inherits the ink foundation, the single gold
-  accent, and light/dark switching without any component being rewritten. `.glass` is redefined
-  as an opaque card — this project rules out glassmorphism and per-frame backdrop filters, and
-  an opaque surface is also what keeps the measured text contrast valid.
+  are aliased onto this project's tokens, so it inherits the monochrome editorial palette
+  without its components being rewritten. `.glass` is redefined as a flat bordered panel, and its
+  remaining blue accents, gradients and glows were flattened to ink — the design has no accent
+  colour. See `DESIGN.md`.
 
-Its A4-landscape print stylesheet is ported too, and forces a light palette regardless of the
-on-screen theme.
+Its A4-landscape print stylesheet is ported too.
 
 The engine is a single pure function:
 

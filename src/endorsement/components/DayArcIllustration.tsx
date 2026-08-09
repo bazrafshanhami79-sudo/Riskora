@@ -10,12 +10,12 @@ export function DayArcIllustration({ className }: { className?: string }) {
   const arcProgress = 0.68 // how much of the ring reads as "elapsed"
 
   return (
-    <div className={`relative flex items-center justify-center ${className ?? ''}`}>
+    <div className={`relative flex items-center justify-center text-foreground ${className ?? ''}`}>
       <svg viewBox="0 0 200 200" className="h-full w-full" aria-hidden="true">
         <defs>
           <linearGradient id="dayArcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3b82f6" />
-            <stop offset="100%" stopColor="#22d3ee" />
+            <stop offset="0%" stopColor="currentColor" />
+            <stop offset="100%" stopColor="currentColor" />
           </linearGradient>
         </defs>
 
@@ -31,13 +31,13 @@ export function DayArcIllustration({ className }: { className?: string }) {
               height={major ? '10' : '6'}
               rx="1"
               fill="currentColor"
-              className="text-white/15"
+              className="text-foreground/25"
               transform={`rotate(${angle} 100 100)`}
             />
           )
         })}
 
-        <circle cx="100" cy="100" r="72" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="10" />
+        <circle cx="100" cy="100" r="72" fill="none" stroke="currentColor" className="text-foreground/10" strokeWidth="10" />
         <circle
           cx="100"
           cy="100"
@@ -50,12 +50,12 @@ export function DayArcIllustration({ className }: { className?: string }) {
           transform="rotate(-90 100 100)"
         />
 
-        <circle cx="100" cy="27" r="5" fill="#22d3ee" className="animate-pulse">
+        <circle cx="100" cy="27" r="5" fill="currentColor" className="animate-pulse">
           <title>امروز</title>
         </circle>
       </svg>
 
-      <div className="glass absolute flex h-20 w-20 items-center justify-center rounded-full text-primary-light shadow-lg shadow-primary/20 sm:h-24 sm:w-24">
+      <div className="glass absolute flex h-20 w-20 items-center justify-center rounded-full text-foreground sm:h-24 sm:w-24">
         <IconBuilding className="h-9 w-9 sm:h-10 sm:w-10" />
       </div>
     </div>

@@ -6,11 +6,11 @@ export const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'in
     <input
       ref={ref}
       className={cn(
-        'tabular h-10 w-full rounded-md border border-border bg-surface-sunken px-3 text-sm text-fg',
-        'transition-colors duration-[--duration-fast] placeholder:text-fg-subtle',
-        'hover:border-border-strong focus:border-accent focus:outline-none',
+        'tabular h-10 w-full rounded-md border border-control bg-background px-3 text-sm text-foreground',
+        'transition-colors duration-[--duration-fast] placeholder:text-muted-foreground',
+        'hover:border-foreground/20 focus:border-foreground focus:outline-none',
         'disabled:cursor-not-allowed disabled:opacity-55',
-        'aria-[invalid=true]:border-danger',
+        'aria-[invalid=true]:border-destructive',
         className,
       )}
       {...props}

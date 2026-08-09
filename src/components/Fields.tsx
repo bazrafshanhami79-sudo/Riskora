@@ -45,7 +45,7 @@ export function FieldShell({
       )}
       <div className="mt-1.5">{children}</div>
       {error ? (
-        <p id={`${id}-error`} role="alert" className="field-help mt-1 text-danger">
+        <p id={`${id}-error`} role="alert" className="field-help mt-1 text-destructive">
           {error}
         </p>
       ) : help ? (
@@ -231,7 +231,7 @@ export function ChoiceField<T extends string>({
         id={id}
         onKeyDown={onKeyDown}
         className={cn(
-          'inline-flex rounded-md border border-border bg-surface-sunken p-0.5',
+          'inline-flex rounded-md border border-control bg-background p-0.5',
           disabled && 'pointer-events-none opacity-55',
         )}
       >
@@ -254,8 +254,8 @@ export function ChoiceField<T extends string>({
                 'cursor-pointer rounded-[5px] px-3 py-1.5 text-xs font-medium',
                 'transition-colors duration-[--duration-fast]',
                 active
-                  ? 'bg-accent text-accent-fg'
-                  : 'text-fg-muted hover:bg-bg-subtle hover:text-fg',
+                  ? 'bg-primary text-primary-foreground'
+                  : 'text-foreground/70 hover:bg-muted hover:text-foreground',
               )}
             >
               {o.label}
