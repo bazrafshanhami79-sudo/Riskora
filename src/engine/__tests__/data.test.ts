@@ -67,3 +67,48 @@ describe('rate table integrity', () => {
     expect(findMachine('02.0.1 — Boiler feed pumps, incl. drive — turbine driven')).toBeDefined()
   })
 })
+
+describe('Persian classification labels', () => {
+  it('covers every sub-group and every machine', async () => {
+    const { SUBGROUP_FA, MACHINE_FA } = await import('../../classifications')
+    for (const s of subGroups) {
+      expect(SUBGROUP_FA[s.name], `missing Persian for sub-group: ${s.name}`).toBeDefined()
+    }
+    for (const m of machines) {
+      expect(MACHINE_FA[m.key], `missing Persian for machine: ${m.key}`).toBeDefined()
+    }
+  })
+
+  it('carries an EAR reference code on every entry', async () => {
+    const { SUBGROUP_FA, MACHINE_FA } = await import('../../classifications')
+    for (const [name, t] of Object.entries(SUBGROUP_FA)) {
+      expect(t.code, `no code for ${name}`).toMatch(/^\d{2}(\.\d+)*$/)
+      expect(t.fa.length).toBeGreaterThan(3)
+    }
+    for (const [key, t] of Object.entries(MACHINE_FA)) {
+      expect(t.code, `no code for ${key}`).toMatch(/^\d{2}(\.\d+)*$/)
+    }
+  })
+
+  it('never lets a Persian label become a rate lookup key', async () => {
+    // The engine must still resolve rates from the ENGLISH name only.
+    const { subGroupLabel, machineLabel } = await import('../../classifications')
+    const s = subGroups[0]
+    expect(subGroupLabel(s.name)).not.toBe(s.name)
+    expect(findSubGroup(s.name)).toBeDefined()
+    expect(findSubGroup(subGroupLabel(s.name))).toBeUndefined()
+
+    const m = machines[0]
+    expect(findMachine(m.key)).toBeDefined()
+    expect(findMachine(machineLabel(m.key))).toBeUndefined()
+  })
+
+  it('disambiguates the 14 identically-named machines by code', async () => {
+    const { MACHINE_FA } = await import('../../classifications')
+    const others = machines.filter((m) =>
+      m.key.endsWith('Other individual machines, not specified elsewhere'),
+    )
+    const labels = others.map((m) => `${MACHINE_FA[m.key].code} ${MACHINE_FA[m.key].fa}`)
+    expect(new Set(labels).size).toBe(others.length)
+  })
+})

@@ -7,8 +7,15 @@
  */
 
 import {
+  D1_MAX_MULTIPLE,
   DEBRIS_THRESHOLD_CU,
   DEFAULT_CURRENCY,
+  DEFAULT_EXCESS_CALIBRATION,
+  MAINTENANCE_TABLE_MAX_MONTHS,
+  d1RebateFactor,
+  d2RebateFactor,
+  d3TplDeduction,
+  maintenanceMonthsFactor,
   E_LADDER,
   e1Factor,
   e2Factor,
@@ -24,6 +31,8 @@ import { clamp, excelRound, num } from './round'
 import type {
   AddOnsDetail,
   CurrencySettings,
+  DeductibleDetail,
+  ExcessCalibration,
   EarInputs,
   EarResult,
   EarthquakeDetail,
@@ -87,6 +96,18 @@ export const DEFAULT_INPUTS: EarInputs = {
   insuranceTax: 0.1,
 
   natureRiskLoadingForMachine: 'No',
+
+  // Neutral by default: no excess entered means no rate rebate, so the
+  // reference scenario and every acceptance test are unaffected.
+  deductibleStructure: 'PERCENT_WITH_MIN',
+  deductibleMinAmount: 0,
+  deductiblePercent: 0,
+  tplExcessPerMille: 1,
+}
+
+/** 13 sub-group excess cells hold text like "150/MW"; those cannot be rated. */
+function toNumber(value: number | string | undefined): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0
 }
 
 /** §5.4 Manufacturer's-Risk band: 5% (1–3 mo) / 7.5% (4–6) / 10% (7+). */
@@ -151,6 +172,7 @@ export function bandedErectionRate(
 export function calculate(
   rawInputs: EarInputs,
   currencySettings: CurrencySettings = DEFAULT_CURRENCY,
+  calibration: ExcessCalibration = DEFAULT_EXCESS_CALIBRATION,
 ): EarResult {
   const i = rawInputs
   const isMachine = i.projectScope === 'INDIVIDUAL_MACHINES'
@@ -261,10 +283,25 @@ export function calculate(
 
   const mrMaterial = manufacturerRiskFactor(mrMaterialMonths) * referenceRate
   const mrDesign = manufacturerRiskFactor(mrDesignMonths) * referenceRate
+  // Sec. 9 point 3.3.5 is a STEPPED table, not months/12: 6 months = 75%,
+  // 12 = 100%, 18 = 140%, 24 = 175% of the twelve-month rate. The linear form
+  // under-rated at 6 months (50% instead of 75%) and over-rated at 24 (200%
+  // instead of 175%).
   const visitsMaint =
-    visitsMonths <= 0 ? 0 : (heavy ? 0.075 : 0.05) * referenceRate * (visitsMonths / 12)
+    visitsMonths <= 0 ? 0 : (heavy ? 0.075 : 0.05) * referenceRate * maintenanceMonthsFactor(visitsMonths)
   const extendedMaint =
-    extendedMonths <= 0 ? 0 : (heavy ? 0.125 : 0.075) * referenceRate * (extendedMonths / 12)
+    extendedMonths <= 0
+      ? 0
+      : (heavy ? 0.125 : 0.075) * referenceRate * maintenanceMonthsFactor(extendedMonths)
+
+  if (Math.max(visitsMonths, extendedMonths) > MAINTENANCE_TABLE_MAX_MONTHS) {
+    warnings.push({
+      code: 'MAINTENANCE_BEYOND_TABLE',
+      message:
+        `دورهٔ نگهداری بیش از ${MAINTENANCE_TABLE_MAX_MONTHS} ماه است — خارج از جدول بند ۳.۳.۵؛ ` +
+        'ضریب به‌صورت خطی برون‌یابی شد و نیاز به تأیید بیمه‌گر اتکایی دارد.',
+    })
+  }
   const expediting =
     num(i.expeditingCostsPct) <= 0 ? 0 : num(i.expeditingCostsPct) * effectiveErection
   const riotStrike =
@@ -288,8 +325,79 @@ export function calculate(
     })
   }
 
+  // --- Deductibles / excesses (Sec. 3.2, Sec. 9 point 3.2) -----------------
+  //
+  // Only two structures are offered: a percentage of each loss subject to a
+  // minimum amount, and a fixed amount. The Swiss Re "multiple of the table
+  // minimum" structure is deliberately not exposed — the excess is always
+  // entered in Rial and the engine derives the multiple from it, which is the
+  // same arithmetic by a friendlier route.
+  //
+  // Sec. 3.2.3 indexation: the table minimum is converted to Rial through the
+  // local-market calibration, not the general c-unit factor. The c-unit factor
+  // still governs the TPL limit bands and the debris threshold, because 3.2.3
+  // speaks only about excesses.
+  const tableMinimumCU = isMachine ? (machine?.genExcessCU ?? 0) : toNumber(subGroup?.genExcessCU)
+  const conversionFactorIRR =
+    num(calibration.referenceItemCU) > 0
+      ? num(calibration.localMinimumIRR) / num(calibration.referenceItemCU)
+      : 0
+  const tableMinimumIRR = tableMinimumCU * conversionFactorIRR
+  const excessAppliedIRR = Math.max(0, num(i.deductibleMinAmount))
+  const multipleAchieved =
+    tableMinimumIRR > 0 && excessAppliedIRR > 0 ? excessAppliedIRR / tableMinimumIRR : 0
+
+  // Sec. 3.2.2: the table minima may not be reduced, so a smaller excess earns
+  // no rebate rather than a penalty.
+  const d1Factor = multipleAchieved > 0 ? d1RebateFactor(multipleAchieved) : 1
+  // AMOUNT_ONLY has no proportional component by definition.
+  const d2Factor =
+    i.deductibleStructure === 'PERCENT_WITH_MIN' ? d2RebateFactor(num(i.deductiblePercent)) : 1
+  const totalRateRebateFactor = excelRound(d1Factor * d2Factor, 4)
+
+  if (excessAppliedIRR > 0 && tableMinimumIRR > 0 && multipleAchieved < 1) {
+    warnings.push({
+      code: 'EXCESS_BELOW_TABLE_MINIMUM',
+      message:
+        'فرانشیز واردشده کمتر از حداقل جدول سوئیس‌ری است — بند ۳.۲.۲ کاهش آن را مجاز نمی‌داند؛ ' +
+        'ضریب تخفیف ۱.۰۰ اعمال شد.',
+    })
+  }
+  if (multipleAchieved > D1_MAX_MULTIPLE) {
+    warnings.push({
+      code: 'EXCESS_MULTIPLE_ABOVE_TABLE',
+      message:
+        `مضرب فرانشیز بیش از ${D1_MAX_MULTIPLE} برابر حداقل جدول است — خارج از جدول D.1؛ ` +
+        'ضریب در پایین‌ترین مقدار نگه داشته شد و نیاز به تأیید بیمه‌گر اتکایی دارد.',
+    })
+  }
+
+  const deductible: DeductibleDetail = {
+    tableMinimumCU,
+    conversionFactorIRR,
+    tableMinimumIRR,
+    excessAppliedIRR,
+    multipleAchieved,
+    d1Factor,
+    d2Factor,
+    totalRateRebateFactor,
+    tplPremiumDeduction: d3TplDeduction(num(i.tplExcessPerMille)),
+  }
+
   // --- 5.5 MD technical rate and premium -----------------------------------
-  const mdTechnicalRate = effectiveErection + hotTestingRate + eqLoadingApplied + loadingsSubtotal
+  //
+  // The rebate applies to erection, hot testing and the reference-rate
+  // loadings. It never touches the earthquake loading (Sec. 3.2.1 allows no
+  // excess rebate on the major-perils rate) nor riot and strike, which is an
+  // externally sourced rate.
+  const rebatedErection = excelRound(effectiveErection * totalRateRebateFactor, 4)
+  const rebatedHotTesting = excelRound(hotTestingRate * totalRateRebateFactor, 4)
+  const rebatedLoadings = excelRound(
+    (mrMaterial + mrDesign + visitsMaint + extendedMaint + expediting) * totalRateRebateFactor +
+      riotStrike,
+    4,
+  )
+  const mdTechnicalRate = rebatedErection + rebatedHotTesting + eqLoadingApplied + rebatedLoadings
   const mdOfficeRate = excelRound(mdTechnicalRate * (1 + num(i.underwritingAdjustment)), 4)
   // No minimum-premium floor on MD — removed in workbook revision v15 after an
   // audit found the referenced cell was the General Excess, not a minimum.
@@ -352,6 +460,7 @@ export function calculate(
       baseRate: tplBaseRate,
       limitFactor: 0,
       effectiveRate: 0,
+      chargedRate: 0,
       premium: 0,
       crossLiabilitySurcharge: 0,
       total: 0,
@@ -362,14 +471,27 @@ export function calculate(
     const tplEffective = tplBaseRate * limitFactor
     // TPL is rated on the Sum Insured; the limit only sets the adaptation
     // factor. No TPL minimum premium is applied (removed in v15).
-    const premium = excelRound((num(i.sumInsured) * tplEffective) / 1000, 0)
+    // The excess deduction (TPL Table 20 point B.3) comes off the premium
+    // BEFORE cross-liability, so the surcharge is 35% of the reduced figure.
+    const premium = excelRound(
+      (num(i.sumInsured) * tplEffective * (1 - deductible.tplPremiumDeduction)) / 1000,
+      0,
+    )
     const crossLiabilitySurcharge =
       i.crossLiability === 'Yes' ? excelRound(0.35 * premium, 0) : 0
+    // Both the excess deduction and cross-liability are pure multipliers on the
+    // premium, so the rate actually charged is exactly expressible — which is
+    // what makes them visible in a rate-only panel.
+    const chargedRate =
+      tplEffective *
+      (1 - deductible.tplPremiumDeduction) *
+      (i.crossLiability === 'Yes' ? 1.35 : 1)
     tpl = {
       included: true,
       baseRate: tplBaseRate,
       limitFactor,
       effectiveRate: tplEffective,
+      chargedRate,
       premium,
       crossLiabilitySurcharge,
       total: premium + crossLiabilitySurcharge,
@@ -453,6 +575,7 @@ export function calculate(
 
   return {
     rialPerCUnit,
+    deductible,
     effectiveErectionMonths,
     effectiveTestingMonths,
     rate,

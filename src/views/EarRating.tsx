@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Settings2 } from 'lucide-react'
 import {
   DEFAULT_CURRENCY,
+  DEFAULT_EXCESS_CALIBRATION,
   DEFAULT_INPUTS,
   EXISTING_PROPERTY_FA,
   calculate,
@@ -12,7 +13,10 @@ import {
   provinces,
   subGroupsFor,
   type CurrencySettings,
+  type DeductiblePercent,
   type EarInputs,
+  type ExcessCalibration,
+  type TplExcessPerMille,
   type EqSensitivityClass,
   type StructureClass,
 } from '@/engine'
@@ -23,7 +27,8 @@ import {
   TPL_CATEGORY_FA,
   TPL_SURROUNDINGS_FA,
 } from '@/labels'
-import { formatRial } from '@/lib/format'
+import { formatInt, formatRial } from '@/lib/format'
+import { machineLabel, subGroupLabel, withCode } from '@/classifications'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader } from '@/components/ui/misc'
 import {
@@ -51,19 +56,25 @@ const grid = 'grid gap-x-5 gap-y-4 sm:grid-cols-2'
  */
 function withCurrent(options: { value: string; label: string }[], current: string) {
   if (!current || options.some((o) => o.value === current)) return options
-  return [{ value: current, label: current }, ...options]
+  return [{ value: current, label: subGroupLabel(current) }, ...options]
 }
 
 export function EarRating({ onHome }: { onHome: () => void }) {
   const [inputs, setInputs] = React.useState<EarInputs>(DEFAULT_INPUTS)
   const [currency, setCurrency] = React.useState<CurrencySettings>(DEFAULT_CURRENCY)
+  const [calibration, setCalibration] = React.useState<ExcessCalibration>(
+    DEFAULT_EXCESS_CALIBRATION,
+  )
   const [showSettings, setShowSettings] = React.useState(false)
 
   const set = React.useCallback(<K extends keyof EarInputs>(key: K, value: EarInputs[K]) => {
     setInputs((prev) => ({ ...prev, [key]: value }))
   }, [])
 
-  const result = React.useMemo(() => calculate(inputs, currency), [inputs, currency])
+  const result = React.useMemo(
+    () => calculate(inputs, currency, calibration),
+    [inputs, currency, calibration],
+  )
 
   const isMachine = inputs.projectScope === 'INDIVIDUAL_MACHINES'
   const groupSubGroups = React.useMemo(
@@ -124,6 +135,21 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                     onChange={(v) => setCurrency((c) => ({ ...c, inflationFactor: v }))}
                   />
                 </div>
+                <div className={`${grid} mt-4`}>
+                  <NumberField
+                    id="excessCalibration"
+                    money
+                    label={L.excessCalibration}
+                    value={calibration.localMinimumIRR}
+                    onChange={(v) => setCalibration((c) => ({ ...c, localMinimumIRR: v }))}
+                  />
+                  <NumberField
+                    id="excessCalibrationRef"
+                    label={L.excessCalibrationRef}
+                    value={calibration.referenceItemCU}
+                    onChange={(v) => setCalibration((c) => ({ ...c, referenceItemCU: v }))}
+                  />
+                </div>
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
                   <p className="field-help">
                     {L.rialPerCUnit}{' '}
@@ -170,23 +196,29 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   <SelectField
                     id="industryGroup"
                     className="sm:col-span-2"
-                    ltrOptions
                     label={L.industryGroup}
                     value={inputs.industryGroup}
                     onChange={changeIndustryGroup}
-                    options={industryGroups.map((g) => ({ value: g.label, label: g.label }))}
+                    options={industryGroups.map((g) => ({
+                      value: g.label,
+                      // The English label stays the value — it is the key that
+                      // filters the sub-group list. Only the display changes.
+                      label: withCode(g.label.split(' — ')[0], g.labelFa || g.label),
+                    }))}
                   />
 
                   {!isMachine && (
                     <SelectField
                       id="subGroup"
                       className="sm:col-span-2"
-                      ltrOptions
                       label={L.subGroup}
                       value={inputs.subGroup}
                       onChange={(v) => set('subGroup', v)}
                       options={withCurrent(
-                        groupSubGroups.map((s) => ({ value: s.name, label: s.name })),
+                        groupSubGroups.map((s) => ({
+                          value: s.name,
+                          label: subGroupLabel(s.name),
+                        })),
                         inputs.subGroup,
                       )}
                     />
@@ -196,11 +228,13 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                     <SelectField
                       id="machine"
                       className="sm:col-span-2"
-                      ltrOptions
                       label={L.machine}
                       value={inputs.machine}
                       onChange={(v) => set('machine', v)}
-                      options={machines.map((m) => ({ value: m.key, label: m.key }))}
+                      options={machines.map((m) => ({
+                        value: m.key,
+                        label: machineLabel(m.key),
+                      }))}
                     />
                   )}
 
@@ -389,6 +423,55 @@ export function EarRating({ onHome }: { onHome: () => void }) {
                   value={inputs.earthquakeExclusion}
                   onChange={(v) => set('earthquakeExclusion', v)}
                   options={YES_NO}
+                />
+              </div>
+            </Card>
+
+            {/* Section 7 — deductible */}
+            <Card>
+              <CardHeader title={L.sec7} />
+              <div className={`${grid} px-5 pb-5`}>
+                <ChoiceField
+                  id="deductibleStructure"
+                  className="sm:col-span-2"
+                  label={L.deductibleStructure}
+                  value={inputs.deductibleStructure}
+                  onChange={(v) => set('deductibleStructure', v)}
+                  options={[
+                    { value: 'PERCENT_WITH_MIN' as const, label: L.structPercentWithMin },
+                    { value: 'AMOUNT_ONLY' as const, label: L.structAmountOnly },
+                  ]}
+                />
+                <NumberField
+                  id="deductibleMinAmount"
+                  money
+                  min={0}
+                  label={L.deductibleMinAmount}
+                  value={inputs.deductibleMinAmount}
+                  onChange={(v) => set('deductibleMinAmount', v)}
+                />
+                <SelectField
+                  id="deductiblePercent"
+                  disabled={inputs.deductibleStructure !== 'PERCENT_WITH_MIN'}
+                  label={L.deductiblePercent}
+                  value={String(inputs.deductiblePercent)}
+                  onChange={(v) => set('deductiblePercent', Number(v) as DeductiblePercent)}
+                  options={[0, 10, 20].map((n) => ({
+                    value: String(n),
+                    label: `${formatInt(n)}٪`,
+                  }))}
+                />
+                <SelectField
+                  id="tplExcessPerMille"
+                  disabled={inputs.tplIncluded === 'No'}
+                  className="sm:col-span-2"
+                  label={L.tplExcessPerMille}
+                  value={String(inputs.tplExcessPerMille)}
+                  onChange={(v) => set('tplExcessPerMille', Number(v) as TplExcessPerMille)}
+                  options={[1, 2, 3, 5].map((n) => ({
+                    value: String(n),
+                    label: `${formatInt(n)}‰`,
+                  }))}
                 />
               </div>
             </Card>

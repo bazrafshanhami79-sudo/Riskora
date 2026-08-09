@@ -116,10 +116,20 @@ reads as labels and controls only.
 
 **The rate panel shows two figures and nothing else** — the MD technical rate
 and the TPL rate. Both are read straight off the engine, so every input feeds
-them: an earthquake loading, a maintenance period or an expediting percentage
-moves the first; TPL category, surroundings or limit moves the second.
-Validation detail renders only when something actually fails, so a valid form
-leaves the column bare.
+them: an earthquake loading, a maintenance period, an expediting percentage or a
+deductible rebate moves the first; TPL category, surroundings, limit, excess and
+cross-liability move the second. The TPL figure is the *charged* rate, not the
+bare effective rate — the excess deduction and the cross-liability surcharge are
+pure multipliers on the premium, so they are exactly expressible in the rate.
+Showing the bare rate left the figure frozen when cross-liability was toggled,
+which read as the surcharge being ignored. Validation detail renders only when
+something actually fails, so a valid form leaves the column bare.
+
+**The classification lists are Persian with their EAR reference code** —
+`12.5 — کارخانهٔ رنگ‌سازی…`. The English name remains the canonical rate lookup
+key and is never displayed; the code keeps the English wording findable in the
+Swiss Re Rating Guide. A test asserts a Persian label can never resolve to a
+rate.
 
 ---
 

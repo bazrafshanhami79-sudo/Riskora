@@ -63,6 +63,13 @@ const BASE: EarInputs = {
   insuranceTax: 0.1,
 
   natureRiskLoadingForMachine: 'No',
+
+  // Deductible left neutral: T1–T9 predate the excess module and must be
+  // unaffected by it.
+  deductibleStructure: 'PERCENT_WITH_MIN',
+  deductibleMinAmount: 0,
+  deductiblePercent: 0,
+  tplExcessPerMille: 1,
 }
 
 const MACHINE_BASE: EarInputs = {
