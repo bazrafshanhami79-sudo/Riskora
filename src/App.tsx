@@ -36,6 +36,7 @@ import {
 } from '@/components/ui/accordion'
 import { ChoiceField, NumberField, SelectField } from '@/components/Fields'
 import { Disclaimer } from '@/components/Disclaimer'
+import { Backdrop } from '@/components/Backdrop'
 import { PremiumWaterfall, RateBuildUp } from '@/components/RateBreakdown'
 import { ResultBar, ValidationPanel } from '@/components/Summary'
 
@@ -94,7 +95,10 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-dvh bg-bg text-fg">
+    // No background on the wrapper: the shader backdrop paints it instead.
+    <div className="relative min-h-dvh text-fg">
+      <Backdrop />
+
       {/* ---------------- header ---------------- */}
       {/* Solid rather than translucent+blur: these bars sit over scrolling
           content, where backdrop-filter repaints every frame. */}
