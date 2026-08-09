@@ -12,7 +12,11 @@ export default defineConfig({
     },
   },
   test: {
-    environment: 'node',
-    include: ['src/**/*.test.ts'],
+    // jsdom throughout: the EAR engine tests are pure and do not care, and the
+    // imported calculator ships a component test that needs a DOM.
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/test/setup.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
   },
 })
