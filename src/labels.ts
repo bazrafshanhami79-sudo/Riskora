@@ -144,6 +144,9 @@ export const L = {
 
   // --- results ----------------------------------------------------------
   mdTechnicalRate: 'نرخ فنی خسارت مادی (MD)',
+  tplRate: 'نرخ مسئولیت شخص ثالث (TPL)',
+  ratePanelTitle: 'نرخ‌های محاسبه‌شده',
+  issuesTitle: 'مواردی که باید اصلاح شود',
   mdOfficeRate: 'نرخ نهایی پس از تعدیل',
   totalPayable: 'حق‌بیمهٔ کل قابل‌پرداخت',
   grossPremium: 'حق‌بیمهٔ ناخالص',

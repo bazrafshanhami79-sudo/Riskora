@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2, Info, MinusCircle, XCircle } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, Info, XCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { formatPerMille, formatRial, formatRialCompact } from '@/lib/format'
 import { L } from '@/labels'
@@ -60,31 +60,26 @@ export function ResultBar({ result }: { result: EarResult }) {
   )
 }
 
+/**
+ * Only failing checks and active warnings are rendered, so a valid form leaves
+ * the page bare. Passing and not-applicable checks are noise once the sticky
+ * bar already reports the overall status.
+ */
 export function ValidationPanel({ result }: { result: EarResult }) {
+  const failing = result.validations.filter((v) => !v.notApplicable && !v.ok)
+  if (failing.length === 0 && result.warnings.length === 0) return null
+
   return (
     <div>
       <ul className="space-y-2">
-        {result.validations.map((v) => {
-          const Icon = v.notApplicable ? MinusCircle : v.ok ? CheckCircle2 : AlertTriangle
+        {failing.map((v) => {
+          const Icon = AlertTriangle
           return (
             <li key={v.id} className="flex items-start gap-2.5">
-              <Icon
-                className={cn(
-                  'mt-1 size-4 shrink-0',
-                  v.notApplicable ? 'text-muted-foreground' : v.ok ? 'text-success' : 'text-destructive',
-                )}
-                aria-hidden
-              />
+              <Icon className="mt-1 size-4 shrink-0 text-destructive" aria-hidden />
               <div className="min-w-0">
                 <span className="text-xs font-semibold text-foreground/70">{v.id}</span>
-                <p
-                  className={cn(
-                    'text-sm',
-                    v.notApplicable ? 'text-muted-foreground' : v.ok ? 'text-foreground/70' : 'text-destructive',
-                  )}
-                >
-                  {v.message}
-                </p>
+                <p className="text-sm text-destructive">{v.message}</p>
               </div>
             </li>
           )
@@ -92,7 +87,7 @@ export function ValidationPanel({ result }: { result: EarResult }) {
       </ul>
 
       {result.warnings.length > 0 && (
-        <div className="mt-4 space-y-2 border-t rule-hair pt-4">
+        <div className={cn('space-y-2', failing.length > 0 && 'mt-4 border-t rule-hair pt-4')}>
           {result.warnings.map((w) => (
             <div key={w.code} className="flex items-start gap-2.5">
               <Info className="mt-1 size-4 shrink-0 text-warning" aria-hidden />

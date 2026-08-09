@@ -46,7 +46,7 @@ export const AccordionContent = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <AccordionPrimitive.Content
     ref={ref}
-    className="overflow-hidden data-[state=closed]:hidden"
+    className="overflow-hidden data-[state=open]:animate-accordion-down data-[state=closed]:animate-accordion-up"
     {...props}
   >
     <div className={cn('border-t rule-hair px-5 py-5', className)}>{children}</div>

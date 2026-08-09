@@ -65,7 +65,7 @@ export function AnimatedValue({
   children?: React.ReactNode
 }) {
   return (
-    <span key={String(value)} className={cn('animate-value tabular inline-block', className)}>
+    <span key={String(value)} className={cn('animate-value-settle tabular inline-block', className)}>
       {children ?? value}
     </span>
   )

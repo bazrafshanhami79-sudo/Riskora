@@ -81,6 +81,39 @@
   --radius-xl: calc(var(--radius) + 12px);
 }
 
+
+/* Motion registered with the theme so `data-[state=open]:animate-*` variants
+   can actually be generated — a hand-written .animate-* class in a layer is
+   invisible to Tailwind's variant system and silently never applies. */
+@theme {
+  --animate-select-in: select-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-select-out: select-out 160ms cubic-bezier(0.3, 0, 0.8, 0.15);
+  --animate-accordion-down: accordion-down 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-accordion-up: accordion-up 220ms cubic-bezier(0.3, 0, 0.8, 0.15);
+  --animate-value-settle: value-settle 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes select-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes select-out {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to   { opacity: 0; transform: scale(0.98) translateY(-4px); }
+}
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to   { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to   { height: 0; opacity: 0; }
+}
+@keyframes value-settle {
+  from { opacity: 0.45; transform: translateY(-2px); }
+  to   { opacity: 1; transform: none; }
+}
+
 /* ==========================================================================
    BASE
    ========================================================================== */
@@ -194,21 +227,6 @@
   .noise-overlay {
     position: relative;
   }
-  /* A figure that has just recalculated. The only thing that moves. */
-  .animate-value {
-    animation: value-settle var(--duration-fast) var(--ease-out);
-  }
-  @keyframes value-settle {
-    from {
-      opacity: 0.45;
-      transform: translateY(-2px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
   .noise-overlay::after {
     content: '';
     position: absolute;

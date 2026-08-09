@@ -92,9 +92,11 @@ on input, because underwriters paste figures from mixed sources.
 **Navigation** follows the reference: transparent at rest, condensing into a
 floating bordered bar once scrolled, with a serif wordmark and mono `TM`.
 
-**The landing page** uses the reference's hero pattern — a mono eyebrow with a
-hairline dash, a `clamp()` display headline, then the two tools as **numbered
-rows separated by hairline rules**, not boxed cards.
+**The landing page** opens on an animated grain-gradient hero (`GrainGradient`
+from `@paper-design/shaders-react`) with the headline over it, then the two
+tools as **numbered rows separated by hairline rules**, not boxed cards. The
+hero is set entirely in Vazirmatn — no serif display stack — and carries a
+`black/35` scrim so the headline's contrast holds steady as the shader moves.
 
 **Progressive disclosure** in the rating tool: the common inputs are open;
 supplementary extensions and commercial settings sit behind labelled accordions.
@@ -108,8 +110,16 @@ exposed whenever the floor bites, then the premium waterfall.
 **Scope-driven fields never lie.** Fields irrelevant to the current scope are
 hidden or disabled, never left silently feeding the calculation.
 
-**Every input has a Persian helper line**, taken from the workbook's own `D`
-column and `Data` sheet notes.
+**The rating form carries no helper text.** Every description under every input
+was removed, along with section descriptions and accordion hints, so the page
+reads as labels and controls only.
+
+**The rate panel shows two figures and nothing else** — the MD technical rate
+and the TPL rate. Both are read straight off the engine, so every input feeds
+them: an earthquake loading, a maintenance period or an expediting percentage
+moves the first; TPL category, surroundings or limit moves the second.
+Validation detail renders only when something actually fails, so a valid form
+leaves the column bare.
 
 ---
 
@@ -121,6 +131,11 @@ column and `Data` sheet notes.
   data entry.
 - Navigation transitions run at the reference's 300–500ms; interaction feedback
   stays at 200ms.
+- Dropdowns open on a 260ms scale-and-fade from the trigger edge and close on
+  160ms; accordions animate their measured height over 300ms open / 220ms close.
+  These are registered as `--animate-*` theme entries rather than hand-written
+  classes — Tailwind cannot build a `data-[state=open]:` variant from raw CSS in
+  a layer, so a hand-written class silently never applies.
 - `prefers-reduced-motion: reduce` collapses all of it to 0.01ms.
 
 ---
@@ -146,6 +161,9 @@ column and `Data` sheet notes.
 
 ## 6. Deliberately absent
 
-No gradients. No glassmorphism. No glow. No accent colour. No shadows. No
-decorative illustration beyond the reference's grid lines and noise. No dark
-theme, because the reference does not define one.
+No glassmorphism. No glow. No accent colour in the interface chrome. No
+shadows. No dark theme, because the reference does not define one.
+
+The one exception is the landing hero's animated gradient, added on request.
+It is the only colour in the product and is confined to that one band; every
+working surface stays monochrome.
