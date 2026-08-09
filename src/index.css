@@ -148,6 +148,35 @@
   --font-sans: 'Vazirmatn Variable', ui-sans-serif, system-ui, sans-serif;
 }
 
+/* --------------------------------------------------------------------------
+   Endorsement-calculator compatibility layer.
+
+   The imported calculator ships its own token vocabulary (primary/foreground/
+   card/muted/…) on a blue-on-navy glass theme. Rather than rewriting every one
+   of its components, its token names are aliased onto Riskora's semantic
+   layer. The calculator then inherits the ink foundation, the single gold
+   accent, and light/dark switching for free, and its own components stay
+   byte-identical to the code as supplied.
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --color-foreground: var(--fg);
+  --color-background: var(--bg);
+  --color-card: var(--surface);
+  --color-muted: var(--bg-subtle);
+  --color-muted-foreground: var(--fg-subtle);
+  --color-secondary: var(--surface-raised);
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: #ffffff;
+  --color-accent-foreground: var(--accent-fg);
+  /* Collapsed onto the one accent: the calculator uses `primary`, `accent` and
+     `primary-light` as gradient stops, and this project allows exactly one
+     accent colour and no gradients. Mapping them together flattens the
+     gradients to solid gold without touching the markup. */
+  --color-primary: var(--accent);
+  --color-primary-light: var(--accent);
+  --color-primary-foreground: var(--accent-fg);
+}
+
 /* ==========================================================================
    BASE
    ========================================================================== */
@@ -243,6 +272,123 @@
 
   .rule-hair {
     border-color: color-mix(in srgb, var(--border) 70%, transparent);
+  }
+
+  /* ---- endorsement-calculator utility classes ----
+     `.glass` is redefined as an opaque card. The original was true
+     glassmorphism (20px backdrop-filter plus inset highlights); this project
+     rules out both glassmorphism and per-frame backdrop filters, and an opaque
+     surface is also what keeps the measured text contrast valid. */
+  .glass {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
+  }
+
+  .glass-accent {
+    background-color: var(--accent-quiet);
+    border-top: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .tabular-fa {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Tactile press feedback. transform only, and inside the 200ms budget. */
+  .press {
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+
+  .print-only {
+    display: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Print — the calculator's report output (A4 landscape).
+   Forced light regardless of the on-screen theme, because paper is white.
+   -------------------------------------------------------------------------- */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 12mm;
+  }
+
+  :root,
+  :root.dark {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-raised: #ffffff;
+    --surface-sunken: #ffffff;
+    --fg: #0f172a;
+    --fg-muted: #334155;
+    --fg-subtle: #475569;
+    --border: #e2e8f0;
+    --accent: #7d4c06;
+    --accent-quiet: #f8fafc;
+  }
+
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    background: #ffffff;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+
+  .print-container {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .glass {
+    border-color: #e2e8f0 !important;
+    background: #ffffff !important;
+  }
+
+  /* Wide tables must fit the page instead of relying on horizontal scroll,
+     which simply gets clipped when printed. */
+  .print-area {
+    overflow: visible !important;
+    border: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+  }
+  .print-area .overflow-x-auto {
+    overflow: visible !important;
+  }
+  .print-area table {
+    min-width: 0 !important;
+    width: 100% !important;
+    font-size: 9.5px !important;
+    table-layout: auto;
+  }
+  .print-area th,
+  .print-area td {
+    padding: 6px 8px !important;
+  }
+  .print-area thead {
+    display: table-header-group;
+  }
+  .print-area tr {
+    break-inside: avoid;
+  }
+
+  .print-total-bar,
+  .glass-accent {
+    background: #f8fafc !important;
+    color: #0f172a !important;
+    border-top: 1px solid #e2e8f0 !important;
   }
 }
 

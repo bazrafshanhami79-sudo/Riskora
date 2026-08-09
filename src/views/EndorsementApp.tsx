@@ -1,0 +1,67 @@
+import { useState } from 'react'
+import { ArrowRight } from 'lucide-react'
+import { L } from '@/labels'
+import { AppHeader } from '@/components/AppHeader'
+import { Badge } from '@/components/ui/misc'
+import { CapitalChangeScenario } from '@/endorsement/scenarios/CapitalChangeScenario'
+import { RenewalScenario } from '@/endorsement/scenarios/RenewalScenario'
+import { Home, type ScenarioId } from '@/endorsement/pages/Home'
+
+type View = 'home' | ScenarioId
+
+/**
+ * The endorsement premium calculator.
+ *
+ * The scenario components, its Home page and the whole `src/endorsement/calc`
+ * engine are the supplied code, unmodified. Only this shell changed: it uses
+ * Riskora's shared header instead of the calculator's own title bar, so the
+ * two tools read as one product.
+ */
+export function EndorsementApp({
+  dark,
+  onToggleTheme,
+  onHome,
+}: {
+  dark: boolean
+  onToggleTheme: () => void
+  onHome: () => void
+}) {
+  const [view, setView] = useState<View>('home')
+
+  return (
+    <div className="relative min-h-dvh text-fg">
+      <AppHeader
+        dark={dark}
+        onToggleTheme={onToggleTheme}
+        onHome={onHome}
+        badge={<Badge tone="accent">{L.endorsementBadge}</Badge>}
+        subtitle={L.endorsementSubtitle}
+      />
+
+      <main className="print-container mx-auto flex max-w-5xl flex-col gap-6 px-4 py-8 sm:px-6">
+        <h1 className="sr-only">{L.toolEndorsementTitle}</h1>
+
+        {view !== 'home' && (
+          <button
+            type="button"
+            onClick={() => setView('home')}
+            className="press no-print inline-flex w-fit cursor-pointer items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium text-accent transition-colors hover:bg-accent-quiet"
+          >
+            <ArrowRight className="size-4" aria-hidden />
+            بازگشت به انتخاب سناریو
+          </button>
+        )}
+
+        <div className={view === 'home' ? '' : 'glass rounded-2xl p-5 sm:p-8'}>
+          {view === 'home' && <Home onSelect={setView} />}
+          {view === 'capitalChange' && <CapitalChangeScenario />}
+          {view === 'renewal' && <RenewalScenario />}
+        </div>
+
+        <p className="no-print pb-4 text-center text-xs text-fg-subtle">
+          مبالغ به ریال است. اعداد بر اساس نرخ و تاریخ‌های واردشده به‌صورت آنی محاسبه می‌شوند.
+        </p>
+      </main>
+    </div>
+  )
+}

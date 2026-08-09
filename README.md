@@ -1,11 +1,17 @@
-# ریسکورا — EAR Premium Rating
+# ریسکورا — Insurance Premium Tools
 
-A single-page premium-rating tool for **EAR (Erection All Risks)** policies, reproducing the
-Swiss Re rating methodology implemented in `EAR_Rating_v18.xlsx`, localized for the Iranian
-market: Iranian Rial, Iranian Standard 2800 seismic classification, and the NIMA FX rate.
+Two Persian (RTL) underwriting calculators behind one landing page:
 
-The interface is entirely in Persian (RTL). The calculation engine is a pure TypeScript module
-with no UI dependencies.
+| Tool | Route | What it does |
+|---|---|---|
+| **نرخ‌دهی تمام‌خطر نصب** | `#/ear` | **EAR (Erection All Risks)** rating, reproducing the Swiss Re methodology in `EAR_Rating_v18.xlsx`, localized for Iran: Rial, Standard 2800 seismic classification, NIMA FX |
+| **ماشین‌حساب الحاقیه** | `#/endorsement` | Day-counted endorsement premium for capital increase/decrease and policy renewal, on the Jalali calendar |
+
+Both calculation engines are pure TypeScript modules with no UI dependencies.
+
+Routing is **hash-based** (`#/ear`, `#/endorsement`) rather than path-based: it gives deep links
+and working back/forward with no router dependency, and needs no SPA rewrite rule on the host —
+a path-based router would 404 on a refresh at `/ear`.
 
 ---
 
@@ -83,16 +89,42 @@ default rather than the session value, edit `currency.json`.
 ## Architecture
 
 ```
-rate-data/                  static JSON rate tables
-src/engine/                 pure calculation module — zero UI imports
+rate-data/                  static JSON rate tables (EAR)
+src/routes.ts               hash routing
+src/App.tsx                 shell: theme, shader backdrop, route resolution
+src/views/
+  Landing.tsx               the tool chooser
+  EarRating.tsx             the EAR rating tool
+  EndorsementApp.tsx        shell around the endorsement calculator
+src/engine/                 EAR calculation module — zero UI imports
   types.ts                  domain types
   data.ts                   typed indexes over rate-data
   round.ts                  Excel-compatible half-away-from-zero rounding
   calc.ts                   the engine
   __tests__/                acceptance tests T1-T9 + data integrity guards
-src/components/             UI
+src/endorsement/            the imported endorsement calculator, as supplied
+  lib/calc/                 its pure day-count premium engine + tests
+  components/ scenarios/ pages/
+src/components/             shared UI
 src/labels.ts               Persian strings, taken from the workbook's own label columns
 ```
+
+### The endorsement calculator
+
+`src/endorsement/` is the supplied `premium-calculator` source, kept as-is — its engine,
+scenarios, components and tests are unmodified. Only two things were added around it:
+
+- `src/views/EndorsementApp.tsx` replaces its own title bar with the shared `AppHeader`, so
+  both tools read as one product.
+- A **token compatibility layer** in `src/index.css`. The calculator ships its own vocabulary
+  (`primary` / `foreground` / `card` / `muted` / …) on a blue-on-navy glass theme; those names
+  are aliased onto Riskora's semantic tokens, so it inherits the ink foundation, the single gold
+  accent, and light/dark switching without any component being rewritten. `.glass` is redefined
+  as an opaque card — this project rules out glassmorphism and per-frame backdrop filters, and
+  an opaque surface is also what keeps the measured text contrast valid.
+
+Its A4-landscape print stylesheet is ported too, and forces a light palette regardless of the
+on-screen theme.
 
 The engine is a single pure function:
 
