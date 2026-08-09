@@ -56,15 +56,7 @@ function withCurrent(options: { value: string; label: string }[], current: strin
   return [{ value: current, label: current }, ...options]
 }
 
-export function EarRating({
-  dark,
-  onToggleTheme,
-  onHome,
-}: {
-  dark: boolean
-  onToggleTheme: () => void
-  onHome: () => void
-}) {
+export function EarRating({ onHome }: { onHome: () => void }) {
   const [inputs, setInputs] = React.useState<EarInputs>(DEFAULT_INPUTS)
   const [currency, setCurrency] = React.useState<CurrencySettings>(DEFAULT_CURRENCY)
   const [showSettings, setShowSettings] = React.useState(false)
@@ -98,13 +90,10 @@ export function EarRating({
   }
 
   return (
-    <div className="relative min-h-dvh text-fg">
+    <div className="relative min-h-dvh text-foreground">
       <AppHeader
-        dark={dark}
-        onToggleTheme={onToggleTheme}
         onHome={onHome}
-        badge={<Badge tone="accent">EAR</Badge>}
-        subtitle={L.appSubtitle}
+        eyebrow="EAR"
         actions={
           <Button
             variant="ghost"
@@ -120,7 +109,7 @@ export function EarRating({
         }
         panel={
           showSettings ? (
-            <div id="currency-settings" className="border-t rule-hair bg-surface-sunken">
+            <div id="currency-settings" className="border-t rule-hair bg-background">
               <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
                 <div className={grid}>
                   <NumberField
@@ -143,7 +132,7 @@ export function EarRating({
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
                   <p className="field-help">
                     {L.rialPerCUnit}{' '}
-                    <span className="tabular font-medium text-fg">
+                    <span className="tabular font-medium text-foreground">
                       {formatRial(result.rialPerCUnit)}
                     </span>
                   </p>
@@ -638,13 +627,13 @@ export function EarRating({
             <Card>
               <CardHeader title={L.breakdownTitle} description={L.breakdownSubtitle} />
               <div className="px-5 pb-5">
-                <h3 className="mb-3 text-xs font-semibold text-fg-subtle">
+                <h3 className="eyebrow mb-4">
                   {L.rateBuildUp}
                 </h3>
                 <RateBuildUp result={result} inputs={inputs} />
               </div>
               <div className="border-t rule-hair px-5 py-5">
-                <h3 className="mb-3 text-xs font-semibold text-fg-subtle">
+                <h3 className="eyebrow mb-4">
                   {L.premiumWaterfall}
                 </h3>
                 <PremiumWaterfall result={result} inputs={inputs} />

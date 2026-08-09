@@ -3,29 +3,27 @@ import { DayArcIllustration } from '../components/DayArcIllustration'
 
 export type ScenarioId = 'capitalChange' | 'renewal'
 
-const CARDS: { id: ScenarioId; title: string; description: string; Icon: typeof IconRefresh; accent: string }[] = [
+const CARDS: { id: ScenarioId; title: string; description: string; Icon: typeof IconRefresh }[] = [
   {
     id: 'capitalChange',
     title: 'افزایش یا کاهش سرمایه',
     description: 'محاسبه حق بیمه الحاقیه برای افزایش یا کاهش سرمایه حین مدت بیمه‌نامه، بر اساس مدت باقی‌مانده هر قلم.',
     Icon: IconTrendingUpDown,
-    accent: 'from-primary to-primary-light',
   },
   {
     id: 'renewal',
     title: 'تمدید بیمه‌نامه',
     description: 'محاسبه حق بیمه دوره جدید تمدید، با مدت مبنا و مدت تمدید کاملاً مستقل از هم.',
     Icon: IconRefresh,
-    accent: 'from-accent to-primary-light',
   },
 ]
 
 function FormulaChip({ label }: { label: string }) {
-  return <span className="glass rounded-xl px-3 py-2 text-xs font-semibold text-foreground sm:text-sm">{label}</span>
+  return <span className="glass px-3 py-2 text-xs font-medium text-foreground sm:text-sm">{label}</span>
 }
 
 function FormulaOperator({ children }: { children: string }) {
-  return <span className="text-lg font-bold text-primary-light sm:text-xl">{children}</span>
+  return <span className="text-lg font-medium text-muted-foreground sm:text-xl">{children}</span>
 }
 
 export function Home({ onSelect }: { onSelect: (id: ScenarioId) => void }) {
@@ -42,32 +40,28 @@ export function Home({ onSelect }: { onSelect: (id: ScenarioId) => void }) {
         <DayArcIllustration className="mx-auto h-40 w-40 sm:h-52 sm:w-52" />
       </div>
 
-      <div className="glass no-print flex flex-wrap items-center justify-center gap-2 rounded-2xl p-4 sm:gap-3 sm:p-5">
+      <div className="glass no-print flex flex-wrap items-center justify-center gap-2 p-4 sm:gap-3 sm:p-5">
         <FormulaChip label="نرخ بیمه‌نامه" />
         <FormulaOperator>÷</FormulaOperator>
         <FormulaChip label="مدت مبنا (روز)" />
         <FormulaOperator>×</FormulaOperator>
         <FormulaChip label="مدت مورد محاسبه (روز)" />
         <FormulaOperator>=</FormulaOperator>
-        <span className="flex items-center gap-1.5 rounded-xl bg-gradient-to-l from-primary to-primary-light px-3 py-2 text-xs font-bold text-primary-foreground shadow-md shadow-primary/25 sm:text-sm">
+        <span className="flex items-center gap-1.5 rounded-xl bg-primary px-3 py-2 text-xs font-medium text-primary-foreground sm:text-sm">
           <IconCoins className="h-4 w-4" />
           حق بیمه
         </span>
       </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-        {CARDS.map(({ id, title, description, Icon, accent }) => (
+        {CARDS.map(({ id, title, description, Icon }) => (
           <button
             key={id}
             type="button"
             onClick={() => onSelect(id)}
-            className="press group glass relative flex cursor-pointer flex-col items-start gap-4 overflow-hidden rounded-3xl p-6 text-right shadow-lg shadow-primary/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/20 sm:p-8"
+            className="press group glass relative flex cursor-pointer flex-col items-start gap-4 overflow-hidden p-6 text-right transition-colors duration-300 hover:bg-muted/60 sm:p-8"
           >
-            <span
-              aria-hidden="true"
-              className={`absolute -left-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br ${accent} opacity-10 blur-2xl transition-opacity duration-300 group-hover:opacity-25`}
-            />
-            <span className={`relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${accent} text-primary-foreground shadow-md shadow-primary/30 transition-transform duration-300 group-hover:scale-105`}>
+            <span className="relative flex h-12 w-12 items-center justify-center rounded bg-primary text-primary-foreground">
               <Icon className="h-7 w-7" />
             </span>
             <span className="relative text-lg font-bold text-foreground">{title}</span>

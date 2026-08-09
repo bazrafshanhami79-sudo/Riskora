@@ -1,180 +1,84 @@
 @import 'tailwindcss';
+
+/* Persian text face — the reference's Instrument Sans/Serif are Latin-only. */
 @import '@fontsource-variable/vazirmatn';
-
-@custom-variant dark (&:where(.dark, .dark *));
-
-/* ==========================================================================
-   LAYER 1 — PRIMITIVE TOKENS (raw values, never referenced by a component)
-   ========================================================================== */
-:root {
-  /* Ink — the deep neutral foundation */
-  --ink-950: #060a12;
-  --ink-900: #0b1220;
-  --ink-850: #0f1828;
-  --ink-800: #141f33;
-  --ink-750: #1a2740;
-  --ink-700: #22324f;
-  --ink-600: #2e415f;
-
-  /* Slate — mid neutrals */
-  --slate-500: #64748b;
-  --slate-400: #94a3b8;
-  --slate-300: #cbd5e1;
-  --slate-200: #e2e8f0;
-  --slate-150: #eaeff5;
-  --slate-100: #f1f5f9;
-  --slate-50: #f8fafc;
-  --white: #ffffff;
-
-  /* Gold — the single restrained metallic accent */
-  --gold-200: #f0dcaa;
-  --gold-300: #e3c37c;
-  --gold-400: #d5ac57;
-  --gold-500: #b98a2e;
-  --gold-600: #a16207;
-  --gold-700: #7d4c06;
-
-  /* Status */
-  --green-400: #4ade80;
-  --green-600: #15803d;
-  --red-400: #f87171;
-  --red-600: #dc2626;
-  --amber-400: #fbbf24;
-  --amber-600: #b45309;
-
-  /* Spacing — density 8/10 (dense dashboard: 4 → 32px) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-
-  /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-
-  /* Motion — brief, purposeful, never above 200ms */
-  --duration-fast: 120ms;
-  --duration-base: 180ms;
-  --ease-out: ease-out;
-}
+/* Latin display + mono, exactly as the reference specifies. */
+@import '@fontsource/instrument-serif/400.css';
+@import '@fontsource-variable/jetbrains-mono';
 
 /* ==========================================================================
-   LAYER 2 — SEMANTIC TOKENS (purpose aliases; this layer switches theme)
+   TOKENS — monochrome editorial, from the reference design.
+
+   Light only. The reference declares a `dark` variant but ships no dark token
+   block, so there is no dark palette to follow.
    ========================================================================== */
 :root {
-  --bg: var(--slate-100);
-  --bg-subtle: var(--slate-150);
-  --surface: var(--white);
-  --surface-raised: var(--white);
-  --surface-sunken: var(--slate-50);
-  --fg: #0a1121;
-  --fg-muted: #4d5b73;
-  /* Darkened from slate-500 / gold-600: both cleared 4.5:1 on white but fell
-     to 4.34 / 4.49 against the page background. Measured, not eyeballed. */
-  --fg-subtle: #5f6d80;
-  --border: var(--slate-200);
-  --border-strong: var(--slate-300);
-  --accent: #9a5e07;
-  --accent-hover: var(--gold-700);
-  --accent-fg: var(--white);
-  /* Lightened from #f5ecd8: it is a text-bearing surface (the disclaimer
-     notice, accent badges, highlighted menu rows), and both --fg-subtle and
-     --accent measured 4.48/4.49:1 against the old value. */
-  --accent-quiet: #faf4e9;
-  --success: var(--green-600);
-  --danger: var(--red-600);
-  --warning: var(--amber-600);
-  --ring: var(--gold-600);
-  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.04);
-  --shadow-panel: 0 -1px 3px rgb(15 23 42 / 0.06), 0 -8px 24px rgb(15 23 42 / 0.06);
-  /* The shader backdrop renders on black, so on a light page it can only ever
-     read as a faint tint before it starts greying the background out. */
-  --backdrop-opacity: 0.1;
+  --background: oklch(0.985 0.002 90);
+  --foreground: oklch(0.12 0.01 60);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.01 60);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.01 60);
+  --primary: oklch(0.12 0.01 60);
+  --primary-foreground: oklch(0.985 0.002 90);
+  --secondary: oklch(0.96 0.005 90);
+  --secondary-foreground: oklch(0.12 0.01 60);
+  --muted: oklch(0.94 0.005 90);
+  --muted-foreground: oklch(0.42 0.02 60);
+  --accent: oklch(0.92 0.01 90);
+  --accent-foreground: oklch(0.12 0.01 60);
+  --destructive: oklch(0.505 0.19 27.3);
+  --destructive-foreground: oklch(0.985 0.002 90);
+  --success: oklch(0.48 0.12 150);
+  --warning: oklch(0.5 0.11 75);
+  --border: oklch(0.88 0.01 90);
+  /* The reference's border is 1.38:1 on the page — right for decorative rules,
+     but this is a data-entry tool where a control's border is what says a field
+     is there. Interactive controls get a stronger edge that clears the 3:1
+     WCAG 1.4.11 threshold for UI components; structural rules keep --border. */
+  --control-border: oklch(0.62 0.01 90);
+  --input: oklch(0.92 0.01 90);
+  --ring: oklch(0.12 0.01 60);
+  --radius: 0.25rem;
+
+  /* Motion, carried over from the reference's utilities. */
+  --duration-fast: 200ms;
+  --duration-base: 300ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.dark {
-  --bg: var(--ink-900);
-  --bg-subtle: var(--ink-950);
-  --surface: var(--ink-850);
-  --surface-raised: var(--ink-800);
-  --surface-sunken: var(--ink-950);
-  --fg: #eef3fb;
-  --fg-muted: #a7b6cd;
-  --fg-subtle: #7c8ba6;
-  --border: var(--ink-700);
-  --border-strong: var(--ink-600);
-  --accent: var(--gold-400);
-  --accent-hover: var(--gold-300);
-  --accent-fg: var(--ink-950);
-  --accent-quiet: #241d0e;
-  --success: var(--green-400);
-  --danger: var(--red-400);
-  --warning: var(--amber-400);
-  --ring: var(--gold-400);
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.3);
-  --shadow-panel: 0 -1px 3px rgb(0 0 0 / 0.5), 0 -10px 30px rgb(0 0 0 / 0.45);
-  --backdrop-opacity: 0.9;
-}
-
-/* Map semantic tokens onto Tailwind utilities. */
 @theme inline {
-  --color-bg: var(--bg);
-  --color-bg-subtle: var(--bg-subtle);
-  --color-surface: var(--surface);
-  --color-surface-raised: var(--surface-raised);
-  --color-surface-sunken: var(--surface-sunken);
-  --color-fg: var(--fg);
-  --color-fg-muted: var(--fg-muted);
-  --color-fg-subtle: var(--fg-subtle);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
+  --font-sans: 'Vazirmatn Variable', 'Instrument Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+  --font-display: 'Instrument Serif', Georgia, serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-fg: var(--accent-fg);
-  --color-accent-quiet: var(--accent-quiet);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
-  --color-danger: var(--danger);
   --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-control: var(--control-border);
+  --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --radius-sm: var(--radius-sm);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-
-  --font-sans: 'Vazirmatn Variable', ui-sans-serif, system-ui, sans-serif;
-}
-
-/* --------------------------------------------------------------------------
-   Endorsement-calculator compatibility layer.
-
-   The imported calculator ships its own token vocabulary (primary/foreground/
-   card/muted/…) on a blue-on-navy glass theme. Rather than rewriting every one
-   of its components, its token names are aliased onto Riskora's semantic
-   layer. The calculator then inherits the ink foundation, the single gold
-   accent, and light/dark switching for free, and its own components stay
-   byte-identical to the code as supplied.
-   -------------------------------------------------------------------------- */
-@theme inline {
-  --color-foreground: var(--fg);
-  --color-background: var(--bg);
-  --color-card: var(--surface);
-  --color-muted: var(--bg-subtle);
-  --color-muted-foreground: var(--fg-subtle);
-  --color-secondary: var(--surface-raised);
-  --color-destructive: var(--danger);
-  --color-destructive-foreground: #ffffff;
-  --color-accent-foreground: var(--accent-fg);
-  /* Collapsed onto the one accent: the calculator uses `primary`, `accent` and
-     `primary-light` as gradient stops, and this project allows exactly one
-     accent colour and no gradients. Mapping them together flattens the
-     gradients to solid gold without touching the markup. */
-  --color-primary: var(--accent);
-  --color-primary-light: var(--accent);
-  --color-primary-foreground: var(--accent-fg);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 12px);
 }
 
 /* ==========================================================================
@@ -186,20 +90,19 @@
   }
 
   html {
-    /* Persian typography: never inherit Latin-tuned tracking. Negative
-       letter-spacing breaks the joined letterforms of Farsi script. */
+    scroll-behavior: smooth;
+    /* Persian letterforms join; any tracking breaks them. */
     letter-spacing: 0;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
-    background-color: var(--bg);
-    color: var(--fg);
-    font-family: 'Vazirmatn Variable', ui-sans-serif, system-ui, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Vazirmatn Variable', 'Instrument Sans', system-ui, sans-serif;
     font-size: 0.9375rem;
     /* Farsi needs more leading than Latin at the same size. */
     line-height: 1.85;
-    font-feature-settings: 'ss01';
     -webkit-font-smoothing: antialiased;
   }
 
@@ -207,7 +110,7 @@
   h2,
   h3,
   h4 {
-    line-height: 1.5;
+    line-height: 1.4;
     font-weight: 600;
     text-wrap: balance;
   }
@@ -216,16 +119,9 @@
     text-wrap: pretty;
   }
 
-  /* Numerals and money read as columns, not prose. */
-  .tabular {
-    font-variant-numeric: tabular-nums;
-    font-feature-settings: 'tnum';
-  }
-
   :focus-visible {
-    outline: 2px solid var(--ring);
+    outline: 1.5px solid var(--ring);
     outline-offset: 2px;
-    border-radius: 3px;
   }
 
   /* Latin technical identifiers (EAR codes, machine names) inside RTL text. */
@@ -246,57 +142,153 @@
 }
 
 /* ==========================================================================
-   LAYER 3 — COMPONENT TOKENS / PRIMITIVES
+   UTILITIES — from the reference
+   ========================================================================== */
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  /* Mono eyebrows/labels. Latin-only face, so Persian falls back to Vazirmatn
+     while digits and codes still render in JetBrains Mono. */
+  .font-mono {
+    font-family: 'JetBrains Mono Variable', 'Vazirmatn Variable', ui-monospace, monospace;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hover-lift {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px);
+  }
+
+  .line-reveal {
+    clip-path: inset(0 100% 0 0);
+    animation: line-reveal 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+  @keyframes line-reveal {
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+
+  .animate-char-in {
+    animation: char-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    opacity: 0;
+    filter: blur(40px);
+    transform: translateY(100%);
+  }
+  @keyframes char-in {
+    100% {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+  }
+
+  .noise-overlay {
+    position: relative;
+  }
+  /* A figure that has just recalculated. The only thing that moves. */
+  .animate-value {
+    animation: value-settle var(--duration-fast) var(--ease-out);
+  }
+  @keyframes value-settle {
+    from {
+      opacity: 0.45;
+      transform: translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .noise-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+/* ==========================================================================
+   COMPONENT PRIMITIVES
    ========================================================================== */
 @layer components {
+  /* Flat, hairline-bordered, near-square. No shadow, no gradient — the
+     reference gets its depth from rules and whitespace, not elevation. */
   .card {
-    background-color: var(--surface);
+    background-color: var(--card);
     border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-card);
+    border-radius: var(--radius);
   }
 
   .field-label {
     display: block;
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--fg);
+    color: var(--foreground);
     line-height: 1.6;
   }
 
   .field-help {
     font-size: 0.75rem;
-    color: var(--fg-subtle);
+    color: var(--muted-foreground);
     line-height: 1.7;
   }
 
   .rule-hair {
-    border-color: color-mix(in srgb, var(--border) 70%, transparent);
+    border-color: color-mix(in oklab, var(--foreground) 10%, transparent);
   }
 
-  /* ---- endorsement-calculator utility classes ----
-     `.glass` is redefined as an opaque card. The original was true
-     glassmorphism (20px backdrop-filter plus inset highlights); this project
-     rules out both glassmorphism and per-frame backdrop filters, and an opaque
-     surface is also what keeps the measured text contrast valid. */
+  /* The reference's eyebrow: a hairline dash followed by a mono label. */
+  /* The reference sets eyebrows in mono, but JetBrains Mono has no Persian
+     glyphs and its wide monospace space visibly gaps Farsi words. Persian
+     eyebrows therefore use the sans face; mono is kept for Latin labels and
+     figures, where it reads as intended. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background-color: color-mix(in oklab, var(--foreground) 30%, transparent);
+  }
+
+  /* ---- endorsement-calculator compatibility ----
+     Its `.glass` was true glassmorphism; here it is a flat bordered panel so
+     the imported components inherit the editorial language unchanged. */
   .glass {
-    background-color: var(--surface);
+    background-color: var(--card);
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-card);
+    border-radius: var(--radius);
   }
 
   .glass-accent {
-    background-color: var(--accent-quiet);
-    border-top: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    background-color: var(--muted);
+    border-top: 1px solid var(--border);
   }
 
   .tabular-fa {
     font-variant-numeric: tabular-nums;
   }
 
-  /* Tactile press feedback. transform only, and inside the 200ms budget. */
   .press {
-    transition: transform var(--duration-base) var(--ease-out);
+    transition: transform var(--duration-fast) var(--ease-out);
   }
   .press:active {
     transform: scale(0.97);
@@ -307,28 +299,32 @@
   }
 }
 
-/* --------------------------------------------------------------------------
-   Print — the calculator's report output (A4 landscape).
-   Forced light regardless of the on-screen theme, because paper is white.
-   -------------------------------------------------------------------------- */
+/* Endorsement calculator token aliases, re-pointed at the new palette.
+   Its components use `primary-light` and `surface`, which the reference
+   vocabulary does not define. */
+@theme inline {
+  --color-primary-light: var(--primary);
+  --color-surface: var(--card);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT — the endorsement calculator's A4 report
+   ========================================================================== */
 @media print {
   @page {
     size: A4 landscape;
     margin: 12mm;
-  }
-
-  :root,
-  :root.dark {
-    --bg: #ffffff;
-    --surface: #ffffff;
-    --surface-raised: #ffffff;
-    --surface-sunken: #ffffff;
-    --fg: #0f172a;
-    --fg-muted: #334155;
-    --fg-subtle: #475569;
-    --border: #e2e8f0;
-    --accent: #7d4c06;
-    --accent-quiet: #f8fafc;
   }
 
   * {
@@ -389,32 +385,5 @@
     background: #f8fafc !important;
     color: #0f172a !important;
     border-top: 1px solid #e2e8f0 !important;
-  }
-}
-
-/* A number that has just changed. The only thing on the page that moves. */
-@keyframes value-settle {
-  from {
-    opacity: 0.45;
-    transform: translateY(-2px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.animate-value {
-  animation: value-settle var(--duration-base) var(--ease-out);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }

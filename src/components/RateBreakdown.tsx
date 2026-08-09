@@ -28,15 +28,15 @@ function Row({
         'flex items-baseline justify-between gap-4 py-2',
         indent && 'ps-4',
         tone === 'total' && 'border-t rule-hair mt-1 pt-3 font-semibold',
-        tone === 'grand' && 'border-t border-accent/40 mt-1 pt-3',
+        tone === 'grand' && 'border-t border-border mt-1 pt-3',
       )}
     >
       <div className="min-w-0">
         <span
           className={cn(
             'text-sm',
-            tone === 'muted' && 'text-fg-subtle',
-            tone === 'grand' && 'font-semibold text-fg',
+            tone === 'muted' && 'text-muted-foreground',
+            tone === 'grand' && 'font-semibold text-foreground',
           )}
         >
           {label}
@@ -46,9 +46,9 @@ function Row({
       <span
         className={cn(
           'tabular shrink-0 text-sm',
-          tone === 'muted' ? 'text-fg-subtle' : 'text-fg',
+          tone === 'muted' ? 'text-muted-foreground' : 'text-foreground',
           (tone === 'total' || tone === 'grand') && 'font-semibold',
-          tone === 'grand' && 'text-accent text-base',
+          tone === 'grand' && 'text-foreground text-base',
         )}
       >
         {value}
@@ -71,7 +71,7 @@ function CompositionBar({
   return (
     <div className="mb-4">
       <div
-        className="flex h-2.5 w-full overflow-hidden rounded-full bg-bg-subtle"
+        className="flex h-2.5 w-full overflow-hidden rounded-full bg-muted"
         role="img"
         aria-label={`ترکیب نرخ فنی: ${visible
           .map((s) => `${s.label} ${formatPerMille(s.value)}`)
@@ -87,10 +87,10 @@ function CompositionBar({
       </div>
       <ul className="mt-2.5 flex flex-wrap gap-x-4 gap-y-1">
         {visible.map((s) => (
-          <li key={s.key} className="flex items-center gap-1.5 text-xs text-fg-muted">
+          <li key={s.key} className="flex items-center gap-1.5 text-xs text-foreground/70">
             <span className={cn('size-2 shrink-0 rounded-[3px]', s.className)} aria-hidden />
             {s.label}
-            <span className="tabular text-fg-subtle">{formatPerMille(s.value)}</span>
+            <span className="tabular text-muted-foreground">{formatPerMille(s.value)}</span>
           </li>
         ))}
       </ul>
@@ -112,25 +112,25 @@ export function RateBuildUp({ result, inputs }: { result: EarResult; inputs: Ear
       key: 'erection',
       label: L.effectiveErection,
       value: rate.effectiveErection,
-      className: 'bg-accent',
+      className: 'bg-primary',
     },
     {
       key: 'hot',
       label: L.hotTesting,
       value: rate.hotTestingRate,
-      className: 'bg-accent/55',
+      className: 'bg-primary/55',
     },
     {
       key: 'eq',
       label: L.eqLoading,
       value: rate.eqLoadingApplied,
-      className: 'bg-fg-muted',
+      className: 'bg-foreground/70',
     },
     {
       key: 'loadings',
       label: L.loadingsSubtotal,
       value: rate.loadings.subtotal,
-      className: 'bg-fg-subtle/60',
+      className: 'bg-foreground/35',
     },
   ]
 

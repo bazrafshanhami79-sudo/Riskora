@@ -13,18 +13,18 @@ export const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'flex h-10 w-full items-center justify-between gap-2 rounded-md border border-border bg-surface-sunken px-3 text-start text-sm text-fg',
+      'flex h-10 w-full items-center justify-between gap-2 rounded-md border border-control bg-background px-3 text-start text-sm text-foreground',
       'cursor-pointer transition-colors duration-[--duration-fast]',
-      'hover:border-border-strong focus:border-accent focus:outline-none',
+      'hover:border-foreground/20 focus:border-foreground focus:outline-none',
       'disabled:cursor-not-allowed disabled:opacity-55',
-      'data-[placeholder]:text-fg-subtle',
+      'data-[placeholder]:text-muted-foreground',
       className,
     )}
     {...props}
   >
     <span className="min-w-0 flex-1 truncate">{children}</span>
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className="size-4 shrink-0 text-fg-subtle" aria-hidden />
+      <ChevronDown className="size-4 shrink-0 text-muted-foreground" aria-hidden />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -39,7 +39,7 @@ export const SelectContent = React.forwardRef<
       ref={ref}
       position={position}
       className={cn(
-        'relative z-50 max-h-80 min-w-[12rem] overflow-hidden rounded-md border border-border bg-surface-raised shadow-lg',
+        'relative z-50 max-h-80 min-w-[12rem] overflow-hidden rounded-md border border-border bg-card shadow-lg',
         'data-[state=open]:animate-value',
         position === 'popper' && 'w-[var(--radix-select-trigger-width)]',
         className,
@@ -61,15 +61,15 @@ export const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-fg outline-none',
-      'data-[highlighted]:bg-accent-quiet data-[highlighted]:text-accent',
+      'relative flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-2 text-sm text-foreground outline-none',
+      'data-[highlighted]:bg-muted data-[highlighted]:text-foreground',
       'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
       className,
     )}
     {...props}
   >
     <SelectPrimitive.ItemIndicator className="shrink-0">
-      <Check className="size-3.5 text-accent" aria-hidden />
+      <Check className="size-3.5 text-foreground" aria-hidden />
     </SelectPrimitive.ItemIndicator>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>

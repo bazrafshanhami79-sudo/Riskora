@@ -22,17 +22,17 @@ export const AccordionTrigger = React.forwardRef<
       ref={ref}
       className={cn(
         'group flex flex-1 cursor-pointer items-center justify-between gap-3 px-5 py-4 text-start',
-        'transition-colors duration-[--duration-fast] hover:bg-bg-subtle',
+        'transition-colors duration-[--duration-fast] hover:bg-muted',
         className,
       )}
       {...props}
     >
       <span className="min-w-0">
-        <span className="block text-sm font-semibold text-fg">{children}</span>
+        <span className="block text-sm font-semibold text-foreground">{children}</span>
         {hint ? <span className="field-help block">{hint}</span> : null}
       </span>
       <ChevronDown
-        className="size-4 shrink-0 text-fg-subtle transition-transform duration-[--duration-base] group-data-[state=open]:rotate-180"
+        className="size-4 shrink-0 text-muted-foreground transition-transform duration-[--duration-base] group-data-[state=open]:rotate-180"
         aria-hidden
       />
     </AccordionPrimitive.Trigger>
