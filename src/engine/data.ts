@@ -14,6 +14,7 @@ import machinesJson from '@rate-data/machines.json'
 import subgroupsJson from '@rate-data/subgroups.json'
 import citiesJson from '@rate-data/cities_2800.json'
 import tplJson from '@rate-data/tpl.json'
+import deductiblesJson from '@rate-data/deductibles.json'
 
 import type {
   CurrencySettings,
@@ -69,6 +70,8 @@ export interface MachineRow {
   /** Additional rate (‰) per testing month beyond 1. */
   addTest: number
   refRate: number
+  /** Table minimum general excess, in c-units (Rate-IndividualMachines col P). */
+  genExcessCU: number
 }
 
 export const machines: MachineRow[] = machinesJson as MachineRow[]
@@ -316,3 +319,85 @@ export const DEFAULT_CURRENCY: CurrencySettings = {
 }
 
 export const DEBRIS_THRESHOLD_CU = currency.thresholdsCU.debrisClearance
+
+
+// ---------------------------------------------------------------------------
+// Deductibles / excesses
+// ---------------------------------------------------------------------------
+
+interface DeductibleData {
+  D1_multipleOfMinimumExcess: { multiple: number; factor: number }[]
+  D2_proportionalExcessPercent: { percent: number; factor: number }[]
+  D3_tplExcessPerMilleOfLimit: { perMille: number; deduction: number }[]
+  maintenanceMonthsFactor: { months: number; factor: number }[]
+  referenceItemCU: number
+  defaultLocalMinimumIRR: number
+}
+
+export const deductibles = deductiblesJson as DeductibleData
+
+export const DEFAULT_EXCESS_CALIBRATION = {
+  localMinimumIRR: deductibles.defaultLocalMinimumIRR,
+  referenceItemCU: deductibles.referenceItemCU,
+}
+
+/**
+ * Step-down lookup: a multiple falling between two rows takes the LOWER row,
+ * matching Excel's `MATCH(..., 1)`. Below the first row there is no rebate.
+ */
+export function d1RebateFactor(multiple: number): number {
+  const rows = deductibles.D1_multipleOfMinimumExcess
+  let factor = 1
+  for (const row of rows) {
+    if (multiple >= row.multiple) factor = row.factor
+  }
+  return multiple < rows[0].multiple ? 1 : factor
+}
+
+export function d2RebateFactor(percent: number): number {
+  const rows = deductibles.D2_proportionalExcessPercent
+  let factor = 1
+  for (const row of rows) {
+    if (percent >= row.percent) factor = row.factor
+  }
+  return factor
+}
+
+export function d3TplDeduction(perMille: number): number {
+  const rows = deductibles.D3_tplExcessPerMilleOfLimit
+  let deduction = 0
+  for (const row of rows) {
+    if (perMille >= row.perMille) deduction = row.deduction
+  }
+  return deduction
+}
+
+/** Highest tabulated D.1 multiple — above it the factor is capped and warned. */
+export const D1_MAX_MULTIPLE =
+  deductibles.D1_multipleOfMinimumExcess[deductibles.D1_multipleOfMinimumExcess.length - 1].multiple
+
+/**
+ * Sec. 9 point 3.3.5 maintenance factor. The table is STEPPED, not linear:
+ * 6 months = 75%, 12 = 100%, 18 = 140%, 24 = 175% of the twelve-month rate.
+ * Linear interpolation between steps; linear extrapolation above 24 months,
+ * which is outside the table and is warned about.
+ */
+export function maintenanceMonthsFactor(months: number): number {
+  if (months <= 0) return 0
+  const t = deductibles.maintenanceMonthsFactor
+  if (months <= t[0].months) return (months / t[0].months) * t[0].factor
+  for (let i = 1; i < t.length; i++) {
+    if (months <= t[i].months) {
+      const a = t[i - 1]
+      const b = t[i]
+      return a.factor + ((months - a.months) / (b.months - a.months)) * (b.factor - a.factor)
+    }
+  }
+  const last = t[t.length - 1]
+  const prev = t[t.length - 2]
+  const slope = (last.factor - prev.factor) / (last.months - prev.months)
+  return last.factor + (months - last.months) * slope
+}
+
+export const MAINTENANCE_TABLE_MAX_MONTHS =
+  deductibles.maintenanceMonthsFactor[deductibles.maintenanceMonthsFactor.length - 1].months

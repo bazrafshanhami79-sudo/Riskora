@@ -4,755 +4,863 @@
   "basic": 4,
   "addErect": 0.25,
   "addTest": 1,
-  "refRate": 12
+  "refRate": 12,
+  "genExcessCU": 2500
  },
  {
   "key": "02.0.1 — Boiler feed pumps, incl. drive — motor driven",
   "basic": 3.5,
   "addErect": 0.2,
   "addTest": 0.8,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 1250
  },
  {
   "key": "02.0.2 — Heat exchangers, condensers",
   "basic": 2.5,
   "addErect": 0.1,
   "addTest": 0.3,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "02.0.3 — Electrical motors — asynchronous squirrel cage, up to 1 MW",
   "basic": 2.5,
   "addErect": 0.1,
   "addTest": 0.6,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "02.0.3 — Electrical motors — asynchronous slip ring, up to 25 MW",
   "basic": 2.7,
   "addErect": 0.1,
   "addTest": 0.8,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 500
  },
  {
   "key": "02.0.3 — Electrical motors — synchronous, up to 25 MW",
   "basic": 3,
   "addErect": 0.15,
   "addTest": 0.9,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 500
  },
  {
   "key": "02.0.3 — Electrical motors — direct current, up to 10 MW",
   "basic": 3.5,
   "addErect": 0.15,
   "addTest": 1,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 1000
  },
  {
   "key": "02.0.3 — Electrical motors — special design (e.g. ring motor), up to 25 MW",
   "basic": 4,
   "addErect": 0.2,
   "addTest": 1,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 2500
  },
  {
   "key": "02.0.4 — Transformers — single/three phase, up to 100 MW; 30 kV",
   "basic": 3,
   "addErect": 0.2,
   "addTest": 0.7,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1000
  },
  {
   "key": "02.0.4 — Transformers — special design (rectifier/furnace transformers), up to 50 MW",
   "basic": 3.5,
   "addErect": 0.25,
   "addTest": 1,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2000
  },
  {
   "key": "02.0.5 — Pumps incl. motor drive — reciprocating type, up to 5 MW; 50 bar",
   "basic": 3,
   "addErect": 0.25,
   "addTest": 0.8,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 1000
  },
  {
   "key": "02.0.5 — Pumps incl. motor drive — centrifugal type, up to 5 MW; 50 bar",
   "basic": 3.3,
   "addErect": 0.25,
   "addTest": 0.7,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1000
  },
  {
   "key": "02.0.5 — Pumps incl. motor drive — special design (submerged, deepwell)",
   "basic": 3.5,
   "addErect": 0.3,
   "addTest": 1,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 2000
  },
  {
   "key": "02.0.6 — Compressors incl. drive — reciprocating, up to 10 MW; 100 bar",
   "basic": 3.7,
   "addErect": 0.2,
   "addTest": 0.75,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 500
  },
  {
   "key": "02.0.6 — Compressors — turbo (axial/radial), turbine driven, up to 10 MW; 50 bar",
   "basic": 4,
   "addErect": 0.25,
   "addTest": 1,
-  "refRate": 15
+  "refRate": 15,
+  "genExcessCU": 2500
  },
  {
   "key": "02.0.6 — Compressors — turbo (axial/radial), motor driven, up to 10 MW; 50 bar",
   "basic": 3.7,
   "addErect": 0.2,
   "addTest": 0.75,
-  "refRate": 12
+  "refRate": 12,
+  "genExcessCU": 1250
  },
  {
   "key": "02.0.7 — Fans, ventilators, up to 5 MW",
   "basic": 3.5,
   "addErect": 0.2,
   "addTest": 0.75,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 500
  },
  {
   "key": "02.0.8 — Other individual machines, not specified elsewhere",
   "basic": 2.5,
   "addErect": 0.2,
   "addTest": 0.4,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "03.0.1 — Dredgers, excavators, draglines and other exploitation machines",
   "basic": 4,
   "addErect": 0.3,
   "addTest": 1,
-  "refRate": 15
+  "refRate": 15,
+  "genExcessCU": 5000
  },
  {
   "key": "03.0.2 — Breakers, crushers",
   "basic": 3.5,
   "addErect": 0.25,
   "addTest": 1.5,
-  "refRate": 25
+  "refRate": 25,
+  "genExcessCU": 2500
  },
  {
   "key": "03.0.3 — Hoists, shaft lifts",
   "basic": 2.5,
   "addErect": 0.2,
   "addTest": 0.6,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1000
  },
  {
   "key": "03.0.4 — Compressors/ventilators incl. drive — turbine driven, up to 10 000 kW; 50 bar",
   "basic": 3,
   "addErect": 0.3,
   "addTest": 1,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 5000
  },
  {
   "key": "03.0.4 — Compressors/ventilators incl. drive — motor driven, up to 10 000 kW; 50 bar",
   "basic": 3.5,
   "addErect": 0.2,
   "addTest": 1.25,
-  "refRate": 15
+  "refRate": 15,
+  "genExcessCU": 2500
  },
  {
   "key": "03.0.5 — Kilns, reverberatory furnaces, pelletizers",
   "basic": 3,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2500
  },
  {
   "key": "03.0.6 — Other individual machines, not specified elsewhere",
   "basic": 2.5,
   "addErect": 0.1,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 1000
  },
  {
   "key": "04.0.1 — Vessels, pressure vessels, distallation columns, crackers, reactors, furnaces",
   "basic": 3.2,
   "addErect": 0.25,
   "addTest": 0.6,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2500
  },
  {
   "key": "04.0.2 — Turbo-compressors/pumps — turbine driven, ≤100 MW; ≤100 bar",
   "basic": 5.5,
   "addErect": 0.3,
   "addTest": 1.5,
-  "refRate": 18
+  "refRate": 18,
+  "genExcessCU": 2500
  },
  {
   "key": "04.0.2 — Turbo-compressors/pumps — motor driven, ≤100 MW; ≤100 bar",
   "basic": 4.25,
   "addErect": 0.25,
   "addTest": 0.9,
-  "refRate": 12
+  "refRate": 12,
+  "genExcessCU": 2500
  },
  {
   "key": "04.0.3 — Reciprocating type compressors and pumps — motor driven, ≤20 MW; ≤250 bar",
   "basic": 3.85,
   "addErect": 0.25,
   "addTest": 0.75,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 2000
  },
  {
   "key": "04.0.4 — Centrifuges",
   "basic": 3.2,
   "addErect": 0.2,
   "addTest": 0.45,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "04.0.5 — Filters, cyclones, electrostatic precipitators",
   "basic": 3.2,
   "addErect": 0.15,
   "addTest": 0.8,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2500
  },
  {
   "key": "04.0.6 — Other individual machines, not specified elsewhere",
   "basic": 2.75,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "05.0.1 — Steel furnaces (Bessemer and Thomas converters, Siemens Martin furnaces)",
   "basic": 2.7,
   "addErect": 0.2,
   "addTest": 0.4,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 2500
  },
  {
   "key": "05.0.2 — Electrical arc furnaces",
   "basic": 2.85,
   "addErect": 0.25,
   "addTest": 0.5,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2500
  },
  {
   "key": "05.0.3 — Other furnaces",
   "basic": 2.5,
   "addErect": 0.2,
   "addTest": 0.4,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 2500
  },
  {
   "key": "05.0.4 — Hot rolling mills, continuous casting machines",
   "basic": 3,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2500
  },
  {
   "key": "05.0.5 — Extrusion presses, forging hammers, forging presses, shears and punching machines, presses, cutters",
   "basic": 3.1,
   "addErect": 0.2,
   "addTest": 0.6,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 2500
  },
  {
   "key": "05.0.6 — Cold rolling mills",
   "basic": 2.85,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 1250
  },
  {
   "key": "05.0.7 — Machine tools, incl. NC equipment, lathes, planing etc.",
   "basic": 2.2,
   "addErect": 0.15,
   "addTest": 0.35,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "05.0.8 — Scrap shearing machines, shredders",
   "basic": 2.5,
   "addErect": 0.25,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 2500
  },
  {
   "key": "05.0.9 — Other individual machines, not specified elsewhere",
   "basic": 2.3,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "06.0.1 — Crushers (hammer, jaw)",
   "basic": 4.5,
   "addErect": 0.1,
   "addTest": 1.5,
-  "refRate": 20
+  "refRate": 20,
+  "genExcessCU": 2500
  },
  {
   "key": "06.0.2 — Transport systems: conveyor belts, bucket elevators, air slides, air lifts",
   "basic": 2.8,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "06.0.3 — Mills: raw material grinding, clinker grinding, coal grinding, mixers",
   "basic": 3.4,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2500
  },
  {
   "key": "06.0.4 — Filters: cyclones, separators, bag filters, electrostatic precipitators (mills, coolers)",
   "basic": 3.2,
   "addErect": 0.15,
   "addTest": 0.8,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1250
  },
  {
   "key": "06.0.5 — Kilns, precalcining and drying furnaces, reheating and melting furnaces",
   "basic": 3.4,
   "addErect": 0.2,
   "addTest": 0.6,
-  "refRate": 7
+  "refRate": 7,
+  "genExcessCU": 2500
  },
  {
   "key": "06.0.6 — Coolers: rotary, planetary, grate type",
   "basic": 3.2,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 2500
  },
  {
   "key": "06.0.7 — Material storage: stackers and reclaimers, weighing devices",
   "basic": 3.2,
   "addErect": 0.1,
   "addTest": 0.75,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 1000
  },
  {
   "key": "06.0.8 — Bagging machines, bulk loading",
   "basic": 2.7,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1000
  },
  {
   "key": "06.0.9 — Glass manufacturing lines",
   "basic": 3.1,
   "addErect": 0.15,
   "addTest": 0.45,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 1000
  },
  {
   "key": "06.0.10 — Other individual machines, not specified elsewhere",
   "basic": 2.8,
   "addErect": 0.1,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 1000
  },
  {
   "key": "07.0.1 — Frame saws",
   "basic": 4.5,
   "addErect": 0.1,
   "addTest": 1.2,
-  "refRate": 15
+  "refRate": 15,
+  "genExcessCU": 1000
  },
  {
   "key": "07.0.2 — Wood chippers, veneering machines, peelers, chippers etc.",
   "basic": 3.6,
   "addErect": 0.15,
   "addTest": 0.75,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 1000
  },
  {
   "key": "07.0.3 — Single and multi-stage presses",
   "basic": 3.75,
   "addErect": 0.2,
   "addTest": 0.65,
-  "refRate": 7
+  "refRate": 7,
+  "genExcessCU": 1000
  },
  {
   "key": "07.0.4 — Other individual machines, not specified elsewhere",
   "basic": 2.2,
   "addErect": 0.1,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 1500
  },
  {
   "key": "08.0.1 — Bark removing (decorticating) machines, wood chippers, wood grinders",
   "basic": 3.6,
   "addErect": 0.15,
   "addTest": 0.75,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 1000
  },
  {
   "key": "08.0.2 — Beating mills, finishers, Jordan mills, Dolly tubs",
   "basic": 2.9,
   "addErect": 0.2,
   "addTest": 0.45,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "08.0.3 — Pulp sheet or paper making machines",
   "basic": 3,
   "addErect": 0.1,
   "addTest": 0.45,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 2500
  },
  {
   "key": "08.0.4 — Black liquor boilers",
   "basic": 3,
   "addErect": 0.1,
   "addTest": 0.55,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 2500
  },
  {
   "key": "08.0.5 — Other individual machines, not specified elsewhere",
   "basic": 2.5,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "09.0.1 — Rotary printing machines",
   "basic": 2.2,
   "addErect": 0.2,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 1000
  },
  {
   "key": "09.0.2 — Other printing machines",
   "basic": 2.5,
   "addErect": 0.2,
   "addTest": 1.45,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 1000
  },
  {
   "key": "09.0.3 — Type setting machines",
   "basic": 2,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 3
+  "refRate": 3,
+  "genExcessCU": 500
  },
  {
   "key": "09.0.4 — Electronic scanning machines",
   "basic": 2.5,
   "addErect": 0.2,
   "addTest": 0.6,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 500
  },
  {
   "key": "09.0.5 — Presses, cutters, punchers",
   "basic": 2.4,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "09.0.6 — Other individual machines, not specified elsewhere",
   "basic": 2,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 3
+  "refRate": 3,
+  "genExcessCU": 500
  },
  {
   "key": "10.0.1 — All individual machines, not specified elsewhere",
   "basic": 2.5,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "11.0.1 — Bale breakers, openers, carding machines",
   "basic": 2,
   "addErect": 0.2,
   "addTest": 0.4,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 1000
  },
  {
   "key": "11.0.2 — Spinning, roving, twisting machines",
   "basic": 1.8,
   "addErect": 0.1,
   "addTest": 0.3,
-  "refRate": 2
+  "refRate": 2,
+  "genExcessCU": 500
  },
  {
   "key": "11.0.3 — Weaving machines, knitting machines",
   "basic": 2,
   "addErect": 0.15,
   "addTest": 0.35,
-  "refRate": 3
+  "refRate": 3,
+  "genExcessCU": 500
  },
  {
   "key": "11.0.4 — Printing machines",
   "basic": 1.8,
   "addErect": 0.2,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "11.0.5 — Washing machines (dry cleaners)",
   "basic": 2,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 1000
  },
  {
   "key": "11.0.6 — Other individual machines, not specified elsewhere",
   "basic": 1.8,
   "addErect": 0.1,
   "addTest": 0.3,
-  "refRate": 3
+  "refRate": 3,
+  "genExcessCU": 500
  },
  {
   "key": "12.0.1 — Extruders, injection moulding machines, plastic-blowing machines, vulcanizing presses",
   "basic": 3.5,
   "addErect": 0.2,
   "addTest": 0.9,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 1250
  },
  {
   "key": "12.0.2 — Cutters, mills, mixers, calanders",
   "basic": 3.2,
   "addErect": 0.2,
   "addTest": 0.65,
-  "refRate": 7
+  "refRate": 7,
+  "genExcessCU": 500
  },
  {
   "key": "12.0.3 — Strand-bead forming machines",
   "basic": 3,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 2500
  },
  {
   "key": "12.0.4 — Vacuum impregnation machines",
   "basic": 3.2,
   "addErect": 0.2,
   "addTest": 0.65,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 1000
  },
  {
   "key": "12.0.5 — Other individual machines, not specified elsewhere",
   "basic": 2.5,
   "addErect": 0.15,
   "addTest": 0.45,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "13.0.1 — Aspirators, cleaning, screening, brushing, shelling, winnowing machines",
   "basic": 2.6,
   "addErect": 0.2,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "13.0.2 — Cyclones, filters, dust collectors, bag filters etc.",
   "basic": 2.8,
   "addErect": 0.2,
   "addTest": 0.45,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "13.0.3 — Ball mills, grinders, crushing mills",
   "basic": 2.6,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "13.0.4 — Oil presses, cocoa butter presses, other presses, beet slicers, cutters, extractors, pelletizers",
   "basic": 3.1,
   "addErect": 0.2,
   "addTest": 0.55,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1000
  },
  {
   "key": "13.0.5 — Sugar cane crusher mills (roller mills) incl. drive — turbine driven, up to 5 MW",
   "basic": 4.25,
   "addErect": 0.25,
   "addTest": 1,
-  "refRate": 12
+  "refRate": 12,
+  "genExcessCU": 2500
  },
  {
   "key": "13.0.5 — Sugar cane crusher mills (roller mills) incl. drive — motor driven, up to 5 MW",
   "basic": 3.8,
   "addErect": 0.2,
   "addTest": 0.75,
-  "refRate": 10
+  "refRate": 10,
+  "genExcessCU": 1250
  },
  {
   "key": "13.0.6 — Ovens, roasting plants, dryers",
   "basic": 2.1,
   "addErect": 0.25,
   "addTest": 0.4,
-  "refRate": 3
+  "refRate": 3,
+  "genExcessCU": 500
  },
  {
   "key": "13.0.7 — Bottle cleaning and filling machines, packing machines",
   "basic": 2.9,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "13.0.8 — Centrifuges, separators",
   "basic": 3.2,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "13.0.9 — Automatic cigar and cigarette production machines",
   "basic": 3.4,
   "addErect": 0.15,
   "addTest": 0.75,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 1000
  },
  {
   "key": "13.0.10 — Vacuum dryers, pulverizer installations for instant pulverized food production",
   "basic": 3.3,
   "addErect": 0.2,
   "addTest": 0.6,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1000
  },
  {
   "key": "13.0.11 — Other individual machines, not specified elsewhere",
   "basic": 2.5,
   "addErect": 0.1,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "14.0.1 — Heaters, pasteurizers, homogenizers, coolers",
   "basic": 2.4,
   "addErect": 0.15,
   "addTest": 0.3,
-  "refRate": 3
+  "refRate": 3,
+  "genExcessCU": 500
  },
  {
   "key": "14.0.2 — Cooling compressors incl. motor drive",
   "basic": 3.6,
   "addErect": 0.2,
   "addTest": 0.75,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 500
  },
  {
   "key": "14.0.3 — Centrifuges, separators",
   "basic": 3.2,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "14.0.4 — Meat saws, cutters, choppers, mincing machines, mixers",
   "basic": 2.5,
   "addErect": 0.25,
   "addTest": 0.35,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "14.0.5 — Vacuum dryers, pulverizers",
   "basic": 3.3,
   "addErect": 0.2,
   "addTest": 0.6,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 500
  },
  {
   "key": "14.0.6 — Bottle cleaning and filling machines, packing machines",
   "basic": 2.9,
   "addErect": 0.15,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "14.0.7 — Other individual machines, not specified elsewhere",
   "basic": 2.2,
   "addErect": 0.1,
   "addTest": 0.4,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "15.0.1 — Cooling compressors incl. motor drive",
   "basic": 3.6,
   "addErect": 0.2,
   "addTest": 0.75,
-  "refRate": 8
+  "refRate": 8,
+  "genExcessCU": 1000
  },
  {
   "key": "15.0.2 — Fans, blowers",
   "basic": 3.2,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "15.0.3 — Evaporators, coolers, heat exchangers",
   "basic": 2.8,
   "addErect": 0.1,
   "addTest": 0.4,
-  "refRate": 4
+  "refRate": 4,
+  "genExcessCU": 500
  },
  {
   "key": "15.0.4 — Autoclaves, sterilizers",
   "basic": 2.5,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "15.0.5 — Can manufacturing machines, filling, sealing, labelling machines",
   "basic": 3.1,
   "addErect": 0.1,
   "addTest": 0.55,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 1000
  },
  {
   "key": "15.0.6 — Other individual machines, not specified elsewhere",
   "basic": 2.2,
   "addErect": 0.15,
   "addTest": 0.4,
-  "refRate": 3.5
+  "refRate": 3.5,
+  "genExcessCU": 500
  },
  {
   "key": "18.0.1 — Air conditioning devices — window units",
   "basic": 4.5,
   "addErect": 0.2,
   "addTest": 1,
-  "refRate": 15
+  "refRate": 15,
+  "genExcessCU": 500
  },
  {
   "key": "18.0.1 — Air conditioning devices — compressors, pumps, vaporizers, ozonizers",
   "basic": 3.5,
   "addErect": 0.2,
   "addTest": 0.6,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 500
  },
  {
   "key": "18.0.2 — Boilers for warm water and heating",
   "basic": 2.5,
   "addErect": 0.2,
   "addTest": 0.3,
-  "refRate": 6
+  "refRate": 6,
+  "genExcessCU": 500
  },
  {
   "key": "18.0.3 — Lifts, escalators",
   "basic": 2.8,
   "addErect": 0.2,
   "addTest": 0.5,
-  "refRate": 5
+  "refRate": 5,
+  "genExcessCU": 500
  },
  {
   "key": "18.0.4 — Other individual machines, not specified elsewhere",
   "basic": 2.2,
   "addErect": 0.15,
   "addTest": 0.35,
-  "refRate": 3
+  "refRate": 3,
+  "genExcessCU": 500
  }
 ]

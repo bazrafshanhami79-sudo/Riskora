@@ -9,13 +9,18 @@ import type { EarResult } from '@/engine'
  * Both are read straight off the engine, so every input feeds them: the MD
  * technical rate is `effectiveErection + hotTesting + earthquakeLoading +
  * loadingsSubtotal`, and the TPL rate is `baseRate × limitFactor`. Adding an
- * earthquake loading, a maintenance period or an expediting percentage moves
- * the first; changing the TPL category, surroundings or limit moves the second.
+ * earthquake loading, a maintenance period, an expediting percentage or a
+ * deductible rebate moves the first; TPL category, surroundings, limit, excess
+ * and cross-liability move the second.
  */
 export function RatePanel({ result }: { result: EarResult }) {
   const rates = [
     { label: L.mdTechnicalRate, value: result.rate.mdTechnicalRate },
-    { label: L.tplRate, value: result.tpl.included ? result.tpl.effectiveRate : 0 },
+    // chargedRate, not effectiveRate: it carries the excess deduction and the
+    // cross-liability surcharge, both pure multipliers on the premium. Using
+    // the bare effective rate left this figure frozen when the underwriter
+    // toggled cross-liability, which read as the surcharge being ignored.
+    { label: L.tplRate, value: result.tpl.included ? result.tpl.chargedRate : 0 },
   ]
 
   return (

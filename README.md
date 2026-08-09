@@ -54,6 +54,7 @@ All rate tables are static JSON in **`rate-data/`**, extracted and verified from
 | `tpl.json` | TPL base rates, limit-adaptation factors, reference minimum premiums |
 | `existing_property.json` | Existing-property cover options and their ‰ rates |
 | `currency.json` | NIMA rate, inflation factor, and c-unit thresholds |
+| `deductibles.json` | Excess rebate tables D.1/D.2/D.3 and the stepped maintenance factor |
 
 `reference/EAR_Rating_v18.xlsx` is kept as documentation only — the Persian labels, the `Data`
 sheet notes, and the `Changelog` sheet explaining prior audit revisions. **Nothing reads the
@@ -136,6 +137,28 @@ waterfall, all seven validation checks, and any non-blocking warnings. The UI on
 the engine returns; it performs no arithmetic of its own.
 
 ---
+
+## Deductibles / excesses
+
+Two structures are offered, matching Iranian market practice: **a percentage of
+each loss subject to a minimum amount**, and **a fixed amount**. Swiss Re's third
+structure — expressing the excess as a multiple of the table minimum — is
+deliberately not exposed; the excess is always entered in Rial and the engine
+derives the multiple from it, which is the same arithmetic by a friendlier route.
+
+The rebate applies to erection, hot testing and the reference-rate loadings. It
+never touches the **earthquake loading** (Sec. 3.2.1 allows no excess rebate on
+the major-perils rate) nor **riot and strike**, which is an externally sourced
+rate.
+
+The table minimum is converted to Rial through a **local-market calibration**
+(Sec. 3.2.3), not the general c-unit factor — editable behind the gear icon,
+defaulting to 50,000,000 IRR per 1,000 c-units. The c-unit factor still governs
+the TPL limit bands and the debris threshold, because 3.2.3 speaks only about
+excesses.
+
+On the TPL side the excess deduction comes off the premium **before**
+cross-liability, so the 35% surcharge is taken on the reduced figure.
 
 ## Two decisions worth knowing about
 

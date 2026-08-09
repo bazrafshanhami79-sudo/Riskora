@@ -1,0 +1,102 @@
+{
+ "source": "Swiss Re EAR Rating Guide, Sec. 3.2 + Sec. 9 point 3.2 + TPL Rating Table 20 point B.3",
+ "D1_multipleOfMinimumExcess": [
+  {
+   "multiple": 1,
+   "factor": 1
+  },
+  {
+   "multiple": 2,
+   "factor": 0.9
+  },
+  {
+   "multiple": 3,
+   "factor": 0.85
+  },
+  {
+   "multiple": 5,
+   "factor": 0.8
+  },
+  {
+   "multiple": 7.5,
+   "factor": 0.75
+  },
+  {
+   "multiple": 10,
+   "factor": 0.7
+  },
+  {
+   "multiple": 20,
+   "factor": 0.65
+  },
+  {
+   "multiple": 30,
+   "factor": 0.6
+  },
+  {
+   "multiple": 40,
+   "factor": 0.55
+  },
+  {
+   "multiple": 60,
+   "factor": 0.5
+  },
+  {
+   "multiple": 100,
+   "factor": 0.45
+  }
+ ],
+ "D2_proportionalExcessPercent": [
+  {
+   "percent": 0,
+   "factor": 1
+  },
+  {
+   "percent": 10,
+   "factor": 0.9
+  },
+  {
+   "percent": 20,
+   "factor": 0.8
+  }
+ ],
+ "D3_tplExcessPerMilleOfLimit": [
+  {
+   "perMille": 1,
+   "deduction": 0
+  },
+  {
+   "perMille": 2,
+   "deduction": 0.1
+  },
+  {
+   "perMille": 3,
+   "deduction": 0.15
+  },
+  {
+   "perMille": 5,
+   "deduction": 0.2
+  }
+ ],
+ "maintenanceMonthsFactor": [
+  {
+   "months": 6,
+   "factor": 0.75
+  },
+  {
+   "months": 12,
+   "factor": 1.0
+  },
+  {
+   "months": 18,
+   "factor": 1.4
+  },
+  {
+   "months": 24,
+   "factor": 1.75
+  }
+ ],
+ "maintenanceNote": "Sec. 9 point 3.3.5. Stepped, not linear. Linear interpolation between steps; above 24 months extrapolate and warn (V16).",
+ "referenceItemCU": 1000,
+ "defaultLocalMinimumIRR": 50000000
+}

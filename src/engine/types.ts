@@ -10,6 +10,16 @@ export type MaintenanceClass = 'Light' | 'Heavy'
 export type TplCategory = 'I' | 'II' | 'III'
 export type TplSurroundings = 'a' | 'b' | 'c'
 export type RiotStrikePeriodBasis = 'Erection period' | 'Testing/Commissioning period'
+/**
+ * General-excess structure. The Swiss Re "multiple of the table minimum"
+ * structure is deliberately not offered — the excess is always entered as a
+ * Rial amount and the engine derives the multiple from it.
+ */
+export type DeductibleStructure = 'PERCENT_WITH_MIN' | 'AMOUNT_ONLY'
+/** Proportional excess, % of each claim (Sec. 9 table D.2). */
+export type DeductiblePercent = 0 | 10 | 20
+/** TPL excess as ‰ of the limit (TPL Rating Table 20 point B.3). */
+export type TplExcessPerMille = 1 | 2 | 3 | 5
 export type EqSensitivityClass = 1 | 2 | 3 | 4
 export type StructureClass = 1 | 2 | 3 | 4 | 5 | 6
 export type SwissReZone = 'A' | 'B' | 'C' | 'D' | 'E'
@@ -85,6 +95,23 @@ export interface EarInputs {
 
   // ---- Block 6: individual-machine nature perils ------------------------
   natureRiskLoadingForMachine: YesNo
+
+  // ---- Block 7: deductibles / excesses ----------------------------------
+  deductibleStructure: DeductibleStructure
+  /** Minimum excess amount per loss, in Rial. 0 = not specified, no rebate. */
+  deductibleMinAmount: number
+  /** Only meaningful for PERCENT_WITH_MIN; forced to 0 for AMOUNT_ONLY. */
+  deductiblePercent: DeductiblePercent
+  /** ‰ of the TPL limit. 1‰ is the mandatory minimum and earns no rebate. */
+  tplExcessPerMille: TplExcessPerMille
+}
+
+/** Sec. 3.2.3 calibration of the table minimum excess to the local market. */
+export interface ExcessCalibration {
+  /** The minimum you apply locally to the reference item, in Rial. */
+  localMinimumIRR: number
+  /** The reference item's table minimum, in c-units. Swiss Re light equipment = 1000. */
+  referenceItemCU: number
 }
 
 export type ValidationId = 'V1' | 'V2' | 'V3' | 'V4' | 'V5' | 'V6' | 'V7'
@@ -101,8 +128,35 @@ export interface ValidationResult {
 
 /** Non-blocking advisories (known gaps that need underwriter attention). */
 export interface EngineWarning {
-  code: 'MACHINE_PERIOD_CLAMPED' | 'MR_DOUBLE_COUNT_IN_MACHINE_SCOPE' | 'EQ_DURATION_BASIS_MACHINE'
+  code:
+    | 'MACHINE_PERIOD_CLAMPED'
+    | 'MR_DOUBLE_COUNT_IN_MACHINE_SCOPE'
+    | 'EQ_DURATION_BASIS_MACHINE'
+    | 'MAINTENANCE_BEYOND_TABLE'
+    | 'EXCESS_BELOW_TABLE_MINIMUM'
+    | 'EXCESS_MULTIPLE_ABOVE_TABLE'
   message: string
+}
+
+export interface DeductibleDetail {
+  /** Table minimum general excess for the selected item, in c-units. */
+  tableMinimumCU: number
+  /** Rial per c-unit used for excesses only (Sec. 3.2.3 indexation). */
+  conversionFactorIRR: number
+  /** Table minimum converted to Rial. */
+  tableMinimumIRR: number
+  /** The excess actually applied in the policy, in Rial. */
+  excessAppliedIRR: number
+  /** excessApplied / tableMinimum. Feeds the D.1 rebate scale. */
+  multipleAchieved: number
+  /** D.1 rebate factor from the multiple. */
+  d1Factor: number
+  /** D.2 rebate factor from the proportional percentage. */
+  d2Factor: number
+  /** d1 x d2, rounded to 4 dp. Applied to the MD rate components. */
+  totalRateRebateFactor: number
+  /** D.3 deduction from the TPL premium. */
+  tplPremiumDeduction: number
 }
 
 export interface RateBuildUp {
@@ -145,6 +199,12 @@ export interface TplDetail {
   baseRate: number
   limitFactor: number
   effectiveRate: number
+  /**
+   * The rate the underwriter is actually charged, after the excess deduction
+   * and the cross-liability surcharge. Both are pure multipliers on the
+   * premium, so they are exactly expressible in the rate.
+   */
+  chargedRate: number
   premium: number
   crossLiabilitySurcharge: number
   total: number
@@ -165,6 +225,7 @@ export interface AddOnsDetail {
 
 export interface EarResult {
   rialPerCUnit: number
+  deductible: DeductibleDetail
   /** Erection/testing months actually used after clamping to the Swiss Re caps. */
   effectiveErectionMonths: number
   effectiveTestingMonths: number
