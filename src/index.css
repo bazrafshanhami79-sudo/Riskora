@@ -91,6 +91,9 @@
   --ring: var(--gold-600);
   --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.04);
   --shadow-panel: 0 -1px 3px rgb(15 23 42 / 0.06), 0 -8px 24px rgb(15 23 42 / 0.06);
+  /* The shader backdrop renders on black, so on a light page it can only ever
+     read as a faint tint before it starts greying the background out. */
+  --backdrop-opacity: 0.1;
 }
 
 .dark {
@@ -114,6 +117,7 @@
   --ring: var(--gold-400);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 1px 3px rgb(0 0 0 / 0.3);
   --shadow-panel: 0 -1px 3px rgb(0 0 0 / 0.5), 0 -10px 30px rgb(0 0 0 / 0.45);
+  --backdrop-opacity: 0.9;
 }
 
 /* Map semantic tokens onto Tailwind utilities. */
