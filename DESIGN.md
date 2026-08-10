@@ -93,10 +93,16 @@ on input, because underwriters paste figures from mixed sources.
 floating bordered bar once scrolled, with a serif wordmark and mono `TM`.
 
 **The landing page** opens on an animated grain-gradient hero (`GrainGradient`
-from `@paper-design/shaders-react`) with the headline over it, then the two
-tools as **numbered rows separated by hairline rules**, not boxed cards. The
-hero is set entirely in Vazirmatn — no serif display stack — and carries a
-`black/35` scrim so the headline's contrast holds steady as the shader moves.
+from `@paper-design/shaders-react`) with the headline over it, then the tools
+as an **icon-fronted card grid** (`rounded-xl`, bordered, no shadow — the one
+radius exception in the system, using the already-defined `--radius-xl`
+token), including a visually-identical but disabled card for the not-yet-built
+claims/loss-assessment tool, marked with a quiet "(به زودی)" badge. This
+replaced an earlier single-column, numbered-hairline-row layout once a third,
+non-interactive entry needed to sit alongside the two live tools without
+reading as a stunted addendum to a list. The hero is set entirely in
+Vazirmatn — no serif display stack — and carries a `black/35` scrim so the
+headline's contrast holds steady as the shader moves.
 
 **Progressive disclosure** in the rating tool: the common inputs are open;
 supplementary extensions and commercial settings sit behind labelled accordions.
@@ -172,7 +178,12 @@ rate.
 ## 6. Deliberately absent
 
 No glassmorphism. No glow. No accent colour in the interface chrome. No
-shadows. No dark theme, because the reference does not define one.
+box-shadow anywhere in the product. No dark theme, because the reference does
+not define one.
+
+The landing page's tool cards use a small `translate-y` lift on hover as an
+interaction cue — this is motion, not elevation via shadow/blur, and stays
+within the motion system's "transform and opacity only" rule (§4).
 
 The one exception is the landing hero's animated gradient, added on request.
 It is the only colour in the product and is confined to that one band; every
